@@ -1,0 +1,167 @@
+---
+const { categoryData } = Astro.props;
+
+interface Props {
+    categoryData?: {
+        id: string;
+        name: string;
+    };
+}
+---
+
+<div
+    class="fixed bottom-8 right-8 z-50 group flex flex-col-reverse items-end gap-3"
+    id="speed-dial-container"
+>
+    <!-- Main Trigger Button -->
+    <button
+        id="speed-dial-trigger"
+        class="btn btn-primary btn-circle btn-lg shadow-xl hover:scale-105 transition-transform duration-200"
+        aria-label="Navigation Menu"
+    >
+        <!-- Menu Icon (Hamburger) -->
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 transition-transform duration-300 group-[.open]:rotate-45 group-[.open]:hidden icon-menu"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+        <!-- Close Icon (X) -->
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 transition-transform duration-300 hidden group-[.open]:block icon-close"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+    <!-- Menu Options -->
+    <div
+        id="speed-dial-options"
+        class="hidden flex-col items-end gap-3 transition-all duration-200 origin-bottom-right scale-0 opacity-0 group-[.open]:scale-100 group-[.open]:opacity-100 group-[.open]:flex"
+    >
+        <!-- View More in Category -->
+        {
+            categoryData && (
+                <a
+                    href={`/blog/${categoryData.id}`}
+                    class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
+                >
+                    To {categoryData.name}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z"
+                        />
+                    </svg>
+                </a>
+            )
+        }
+
+        <!-- Back to All Categories -->
+        <a
+            href="/blog"
+            class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
+        >
+            All Categories
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-4"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+            </svg>
+        </a>
+
+        <!-- Scroll to Top -->
+        <button
+            id="scroll-to-top"
+            class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
+        >
+            Top
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-4"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    const container = document.getElementById("speed-dial-container");
+    const trigger = document.getElementById("speed-dial-trigger");
+    const options = document.getElementById("speed-dial-options");
+    const scrollToTopBtn = document.getElementById("scroll-to-top");
+
+    let isOpen = false;
+
+    function toggleMenu() {
+        isOpen = !isOpen;
+        if (isOpen) {
+            container?.classList.add("open");
+        } else {
+            container?.classList.remove("open");
+        }
+    }
+
+    trigger?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    scrollToTopBtn?.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        toggleMenu(); // Close after clicking
+    });
+
+    // Close on click outside
+    document.addEventListener("click", (e) => {
+        if (isOpen && container && !container.contains(e.target as Node)) {
+            toggleMenu();
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isOpen) {
+            toggleMenu();
+        }
+    });
+</script>

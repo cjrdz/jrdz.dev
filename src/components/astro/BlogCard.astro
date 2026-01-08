@@ -1,0 +1,129 @@
+---
+import { formatDateShort } from "../../lib/utils";
+import { getCategoryById } from "../../lib/categories";
+
+interface Props {
+    slug: string;
+    title: string;
+    description: string;
+    pubDate: Date;
+    category: string;
+    subcategory?: string;
+    tags?: string[];
+    index?: number;
+}
+
+const {
+    slug,
+    title,
+    description,
+    pubDate,
+    category,
+    subcategory,
+    tags,
+    index = 0,
+} = Astro.props;
+
+const categoryData = getCategoryById(category);
+---
+
+<a href={`/blog/${slug}`} class={`blog-card blog-card-${index} block group`}>
+    <article
+        class="card bg-base-100 shadow-md hover:shadow-lg border border-base-300/50 rounded-xl h-full"
+    >
+        <div class="card-body p-6">
+            <!-- Category badge -->
+            <div class="flex flex-wrap gap-2 mb-3">
+                <span class="text-xs font-medium text-primary">
+                    {categoryData?.name || category}
+                </span>
+                {
+                    subcategory && (
+                        <span class="text-xs text-base-content/50">
+                            • {subcategory}
+                        </span>
+                    )
+                }
+            </div>
+
+            <!-- Title -->
+            <h3
+                class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors"
+            >
+                {title}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-sm text-base-content/60 line-clamp-2 mb-4">
+                {description}
+            </p>
+
+            <!-- Footer -->
+            <div
+                class="flex justify-between items-center text-xs text-base-content/50 mt-auto"
+            >
+                <time datetime={pubDate.toISOString()}>
+                    {formatDateShort(pubDate)}
+                </time>
+                <span class="text-primary group-hover:underline"> Read → </span>
+            </div>
+        </div>
+    </article>
+</a>
+
+<style>
+    /* ===== ANIMATION SYSTEM ===== */
+    article {
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .blog-card {
+        --card-opacity: 0;
+        --card-y: 20px;
+        opacity: var(--card-opacity);
+        transform: translateY(var(--card-y));
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .blog-card.animate-in {
+        --card-opacity: 1;
+        --card-y: 0px;
+    }
+
+    /* Staggered animation delays */
+    .blog-card-0 {
+        transition-delay: 0.05s;
+    }
+    .blog-card-1 {
+        transition-delay: 0.1s;
+    }
+    .blog-card-2 {
+        transition-delay: 0.15s;
+    }
+    .blog-card-3 {
+        transition-delay: 0.2s;
+    }
+    .blog-card-4 {
+        transition-delay: 0.25s;
+    }
+    .blog-card-5 {
+        transition-delay: 0.3s;
+    }
+
+    /* ===== HOVER EFFECTS ===== */
+    .blog-card:hover article {
+        transform: translateY(-2px);
+    }
+
+    /* ===== ACCESSIBILITY ===== */
+    @media (prefers-reduced-motion: reduce) {
+        .blog-card {
+            transition: opacity 0.3s ease !important;
+            transform: none !important;
+            opacity: 1;
+        }
+        .blog-card:hover article {
+            transform: none !important;
+        }
+    }
+</style>

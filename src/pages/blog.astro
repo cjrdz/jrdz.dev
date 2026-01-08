@@ -1,0 +1,139 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/astro/Navbar.astro";
+import BlogCard from "../components/astro/BlogCard.astro";
+import CategoryCard from "../components/astro/CategoryCard.astro";
+import { sortPostsByDate, generateBlogStructuredData } from "../lib/utils";
+import { categories } from "../lib/categories";
+import '../styles/blog.css';
+
+// Get all published blog posts
+const allPosts = await getCollection("blog", ({ data }) => {
+    return !data.draft;
+});
+
+// Sort posts by date
+const posts = sortPostsByDate(allPosts);
+
+// Get recent posts (top 3)
+const recentPosts = posts.slice(0, 3);
+
+// Group posts by category
+const postsByCategory = new Map();
+for (const post of posts) {
+    const category = post.data.category;
+    if (!postsByCategory.has(category)) {
+        postsByCategory.set(category, []);
+    }
+    postsByCategory.get(category).push(post);
+}
+
+// Generate structured data for SEO
+const structuredData = generateBlogStructuredData(posts);
+---
+
+<BaseLayout
+    title="Blog - Jrdz"
+    description="Explore articles about cloud computing, cybersecurity, networking, and development"
+>
+    <Fragment slot="head">
+        <script
+                is:inline
+                type="application/ld+json"
+                set:html={JSON.stringify(structuredData)}
+        />
+    </Fragment>
+
+    <Navbar />
+
+    <div class="max-w-7xl mx-auto px-4 py-8 md:py-12 lg:py-16">
+        <!-- Hero Section -->
+        <header class="blog-hero text-center mb-2 md:mb-16">
+            <h1
+                class="text-3xl md:text-4xl lg:text-4xl font-bold text-primary mb-3 md:mb-4"
+            >
+                Tech Blog
+            </h1>
+            <p
+                class="text-base md:text-lg text-base-content/70 max-w-2xl mx-auto leading-relaxed"
+            >
+                Explore articles about cloud computing, cybersecurity,
+                networking, and development.
+            </p>
+        </header>
+
+        <!-- Categories Section -->
+        <section class="categories-section mb-16 md:mb-20">
+            <h2
+                class="text-2xl md:text-3xl font-bold text-base-content mb-6 md:mb-8"
+            >
+                Categories
+            </h2>
+
+            <div
+                class="categories-grid grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            >
+                {
+                    categories.map((category, index) => {
+                        const categoryPosts =
+                            postsByCategory.get(category.id) || [];
+                        return (
+                            <CategoryCard
+                                category={category}
+                                postCount={categoryPosts.length}
+                                index={index}
+                            />
+                        );
+                    })
+                }
+            </div>
+        </section>
+
+        <!-- Recent Posts Section -->
+        {
+            recentPosts.length > 0 && (
+                <section class="recent-posts-section">
+                    <h2 class="text-2xl md:text-3xl font-bold text-base-content mb-6 md:mb-8">
+                        Recent Posts
+                    </h2>
+
+                    <div class="blog-grid grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        {recentPosts.map((post, index) => (
+                            <BlogCard
+                                slug={post.slug}
+                                title={post.data.title}
+                                description={post.data.description}
+                                pubDate={post.data.pubDate}
+                                category={post.data.category}
+                                subcategory={post.data.subcategory}
+                                tags={post.data.tags}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )
+        }
+
+        <!-- Empty State -->
+        {
+            posts.length === 0 && (
+                <section class="empty-state text-center py-16 md:py-20">
+                    <div class="text-5xl md:text-6xl mb-4 opacity-50">📝</div>
+                    <h3 class="text-xl md:text-2xl font-bold text-base-content mb-3">
+                        No posts yet
+                    </h3>
+                    <p class="text-base md:text-lg text-base-content/70">
+                        Check back soon for new content!
+                    </p>
+                </section>
+            )
+        }
+    </div>
+</BaseLayout>
+
+<script>
+    // Import animation script
+    import "../scripts/blog.ts";
+</script>

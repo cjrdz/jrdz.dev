@@ -1,0 +1,75 @@
+---
+import "../../styles/global.css";
+import ThemeToggle from "../svelte/ThemeToggle.svelte";
+
+const currentPath = Astro.url.pathname;
+
+interface NavLink {
+    href: string;
+    label: string;
+}
+
+const navLinks: NavLink[] = [
+    { href: "/", label: "Home" },
+    { href: "/blog", label: "Blog" },
+    { href: "/about", label: "About" },
+];
+---
+
+<header
+    id="navbar"
+    class="navbar bg-base-100/80 backdrop-blur-sm border-b border-base-300 sticky top-0 z-50 shadow-sm transition-all duration-300"
+>
+    <div class="navbar-start">
+        <a href="/" class="btn btn-ghost normal-case text-xl font-bold">🏠</a>
+    </div>
+
+    <div class="navbar-center flex">
+        <ul class="menu menu-horizontal px-1">
+            {
+                navLinks.map((link) => (
+                    <li>
+                        <a
+                            href={link.href}
+                            class={`text-lg ${currentPath === link.href ? "text-primary font-semibold" : ""}`}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+
+    <div class="navbar-end">
+        <ThemeToggle client:load />
+    </div>
+</header>
+
+<style>
+    /* Navbar hover animations */
+    .menu a {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .menu a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: currentColor;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .menu a:hover::after {
+        width: 80%;
+    }
+
+    .menu a:hover {
+        transform: translateY(-2px);
+    }
+</style>

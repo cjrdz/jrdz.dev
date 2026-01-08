@@ -1,0 +1,297 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Navbar from "../../../components/astro/Navbar.astro";
+import BlogCard from "../../../components/astro/BlogCard.astro";
+import { categories } from "../../../lib/categories";
+import {
+    sortPostsByDate,
+    generateCategoryStructuredData,
+} from "../../../lib/utils";
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection("blog", ({ data }) => {
+        return !data.draft;
+    });
+
+    return categories.map((category) => {
+        const categoryPosts = allPosts.filter(
+            (post) => post.data.category === category.id,
+        );
+
+        return {
+            params: { category: category.id },
+            props: {
+                category,
+                posts: sortPostsByDate(categoryPosts),
+            },
+        };
+    });
+}
+
+const { category, posts } = Astro.props;
+const Icon = category.iconComponent;
+
+// Generate structured data
+const structuredData = generateCategoryStructuredData(category, posts);
+
+// Function to capitalize first letter only
+const capitalizeSubcategory = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+// Group posts by subcategory
+const postsBySubcategory = new Map();
+for (const post of posts) {
+    const subcategory = post.data.subcategory || "General";
+    const capitalizedSubcategory = capitalizeSubcategory(subcategory);
+    if (!postsBySubcategory.has(capitalizedSubcategory)) {
+        postsBySubcategory.set(capitalizedSubcategory, []);
+    }
+    postsBySubcategory.get(capitalizedSubcategory).push(post);
+}
+---
+
+<BaseLayout
+    title={`${category.name} - Jrdz`}
+    description={category.seoDescription ||
+        `${category.description} - ${posts.length} articles available.`}
+>
+    <Fragment slot="head">
+        <script
+                is:inline
+                type="application/ld+json"
+                set:html={JSON.stringify(structuredData)}
+        />
+    </Fragment>
+    <Navbar />
+
+    <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb-section mb-8">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li>
+                        <a
+                            href="/"
+                            class="text-base-content/60 hover:text-base-content transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/blog"
+                            class="text-base-content/60 hover:text-base-content transition-colors"
+                        >
+                            Blog
+                        </a>
+                    </li>
+                    <li class="text-base-content">
+                        {category.name}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Category Header -->
+        <header class="category-hero mb-12">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="category-icon-wrapper">
+                    {
+                        Icon ? (
+                            <Icon
+                                class="w-10 h-10 md:w-12 md:h-12 text-primary"
+                                aria-label={category.name}
+                            />
+                        ) : (
+                            <div class="text-4xl md:text-5xl">
+                                {category.icon}
+                            </div>
+                        )
+                    }
+                </div>
+                <div class="flex-1">
+                    <h1
+                        class="text-2xl md:text-3xl lg:text-4xl font-bold text-base-content mb-2"
+                    >
+                        {category.name}
+                    </h1>
+                    <span class="text-sm text-base-content/50">
+                        {posts.length}
+                        {posts.length === 1 ? "post" : "posts"}
+                    </span>
+                </div>
+            </div>
+            <p class="text-base text-base-content/70 max-w-3xl">
+                {category.description}
+            </p>
+        </header>
+
+        {
+            posts.length > 0 ? (
+                <div class="posts-section space-y-12 md:space-y-16">
+                    {Array.from(postsBySubcategory.entries()).map(
+                        (
+                            [subcategory, subcategoryPosts]: [string, any[]],
+                            sectionIndex: number,
+                        ) => (
+                            <section class="subcategory-section">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h2 class="text-xl md:text-2xl font-bold text-base-content">
+                                        {subcategory}
+                                        <span class="text-sm font-normal text-base-content/50 ml-2">
+                                            ({subcategoryPosts.length})
+                                        </span>
+                                    </h2>
+                                </div>
+
+                                <div class="blog-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                    {subcategoryPosts.map(
+                                        (post: any, index: number) => (
+                                            <BlogCard
+                                                slug={post.slug}
+                                                title={post.data.title}
+                                                description={
+                                                    post.data.description
+                                                }
+                                                pubDate={post.data.pubDate}
+                                                category={post.data.category}
+                                                subcategory={
+                                                    post.data.subcategory
+                                                }
+                                                tags={post.data.tags}
+                                                index={index + sectionIndex * 6}
+                                            />
+                                        ),
+                                    )}
+                                </div>
+                            </section>
+                        ),
+                    )}
+                </div>
+            ) : (
+                <section class="empty-state text-center py-16 bg-base-200 rounded-lg">
+                    <div class="mb-6">
+                        {Icon ? (
+                            <Icon
+                                class="w-16 h-16 text-base-content/30 mx-auto"
+                                aria-label="No posts"
+                            />
+                        ) : (
+                            <div class="text-6xl opacity-30">
+                                {category.icon}
+                            </div>
+                        )}
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-base-content mb-3">
+                        No posts in this category yet
+                    </h3>
+                    <p class="text-base-content/70 text-base md:text-lg mb-6">
+                        Check back soon for new content!
+                    </p>
+                </section>
+            )
+        }
+
+        <!-- Navigation -->
+        <div class="navigation-section mt-12 md:mt-16">
+            <a
+                href="/blog"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-base-content/20 hover:border-primary hover:bg-primary/5 transition-all duration-200 text-base-content font-medium"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to All Categories
+            </a>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    /* ===== ANIMATIONS ===== */
+    .blog-card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .blog-card.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+        .blog-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .category-hero {
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .subcategory-section h2 {
+            font-size: 1.25rem;
+        }
+    }
+</style>
+
+<script>
+    interface ObserverConfig {
+        threshold: number;
+        rootMargin: string;
+    }
+
+    const OBSERVER_CONFIG: ObserverConfig = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -80px 0px",
+    };
+
+    const handleIntersection = (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver,
+    ): void => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const target = entry.target as HTMLElement;
+                target.classList.add("animate-in");
+                observer.unobserve(target);
+            }
+        });
+    };
+
+    const initializeAnimations = (): void => {
+        const observer = new IntersectionObserver(
+            handleIntersection,
+            OBSERVER_CONFIG,
+        );
+
+        // Animate blog card items
+        const blogCards = document.querySelectorAll<HTMLElement>(".blog-card");
+        blogCards.forEach((item) => {
+            observer.observe(item);
+        });
+    };
+
+    // Initialize when DOM is ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeAnimations);
+    } else {
+        initializeAnimations();
+    }
+</script>

@@ -1,0 +1,236 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/astro/Navbar.astro";
+import CodeBracket from "astro-heroicons/outline/CodeBracket.astro";
+import "../styles/about.css";
+
+interface Project {
+    name: string;
+    url: string;
+    description: string;
+}
+
+const projects: Project[] = [
+    {
+        name: "Azure Resource Move Support",
+        url: "https://azmvsupport.vercel.app/",
+        description:
+            "Tool to check Azure resource move support across regions and subscriptions",
+    },
+    {
+        name: "Azure Resource Move Scraper",
+        url: "https://github.com/cjrdz/azmvscrapy",
+        description:
+            "Python scraper for Azure documentation on resource move operations",
+    },
+    {
+        name: "Isho's Factory web",
+        url: "https://ishos-factory.vercel.app",
+        description: "Website for Isho's Gelatos & Sorbetes - El Salvador",
+    },
+];
+---
+
+<BaseLayout
+    title="About - Jrdz"
+    description="Learn more about Jonathan Rodriguez, a passionate developer and cloud engineer"
+>
+    <Navbar />
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="text-center mb-2 anim-item">
+            <h2 class="text-3xl font-bold mb-2 text-primary">
+                Developer | DevOps Engineer
+            </h2>
+        </div>
+
+        <!-- About Section -->
+        <div class="card bg-base-100 shadow-xl mb-3 anim-item delay-100">
+            <div class="card-body">
+                <p class="text-lg leading-relaxed">
+                    Hi there, I'm <strong class="text-primary"
+                        >Jonathan Rodriguez</strong
+                    >. I've spent the last 3+ years building web applications
+                    and getting them live in the cloud. I really enjoy working
+                    on the backend with Python and Django, paired with
+                    PostgreSQL databases, and I'm comfortable with the frontend
+                    stuff too such as HTML, CSS, JavaScript, and TypeScript.
+                    Over time, I've gotten more into the DevOps side of things,
+                    working with Azure and AWS to set up cloud infrastructure. I
+                    use tools like Terraform, OpenTofu and Ansible to automate
+                    deployments and environments, which honestly makes life so
+                    much easier. I'm Azure certified (AZ-900) and have worked
+                    with various Azure and AWS services. I love setting up CI/CD
+                    pipelines that make deploying code faster and less
+                    stressful. For me, it's all about making systems that are
+                    reliable and don't break the bank.
+                </p>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div
+            class="collapse collapse-arrow bg-base-100 shadow-xl mb-3 anim-item delay-200"
+        >
+            <input type="checkbox" checked aria-label="Toggle skills section" />
+            <div class="collapse-title text-xl font-semibold">Skills</div>
+            <div class="collapse-content">
+                <div class="space-y-6">
+                    <!-- Frontend -->
+                    <div>
+                        <h3
+                            class="text-lg font-semibold mb-3 flex items-center gap-2"
+                        >
+                            <span class="text-primary">→</span> Frontend:
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                [
+                                    "HTML",
+                                    "CSS",
+                                    "JavaScript",
+                                    "TypeScript",
+                                    "Astro.js",
+                                    "Svelte.js",
+                                    "Vue.js",
+                                    "Tailwind CSS",
+                                    "DaisyUI",
+                                    "Pico CSS",
+                                    "Bulma CSS",
+                                ].map((skill) => (
+                                    <div class="badge badge-lg badge-outline">
+                                        {skill}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div>
+                        <h3
+                            class="text-lg font-semibold mb-3 flex items-center gap-2"
+                        >
+                            <span class="text-primary">→</span> Backend:
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                [
+                                    "Python",
+                                    "Django",
+                                    "PHP",
+                                    "Java",
+                                    "SQL",
+                                    "PostgreSQL",
+                                    "MySQL",
+                                    "MongoDB",
+                                    "Git",
+                                    "GitHub",
+                                    "Linux",
+                                ].map((skill) => (
+                                    <div class="badge badge-lg badge-outline">
+                                        {skill}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Cloud & DevOps -->
+                    <div>
+                        <h3
+                            class="text-lg font-semibold mb-3 flex items-center gap-2"
+                        >
+                            <span class="text-primary">→</span> Cloud & DevOps:
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                [
+                                    "Azure",
+                                    "AWS",
+                                    "Docker",
+                                    "Kubernetes",
+                                    "Terraform",
+                                    "OpenTofu",
+                                    "Ansible",
+                                    "CI/CD",
+                                    "Azure DevOps",
+                                    "ARM Templates",
+                                    "Bicep",
+                                ].map((skill) => (
+                                    <div class="badge badge-lg badge-outline">
+                                        {skill}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificates Section -->
+        <div class="card bg-base-100 shadow-xl mb-3 anim-item delay-250">
+            <div class="card-body">
+                <h2 class="card-title text-2xl mb-4">Certifications</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-3">
+                        <span class="text-primary text-xl">✓</span>
+                        <span>Azure Fundamentals (AZ-900)</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-primary text-xl">✓</span>
+                        <span>ARM Foundational (L100) & Specialist (L200)</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-primary text-xl">✓</span>
+                        <span>Azure Cloud Service (L100)</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-primary text-xl">✓</span>
+                        <span>Azure Batch (L100)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="card bg-base-100 shadow-xl anim-item delay-300">
+            <div class="card-body">
+                <h2 class="card-title text-2xl mb-4">My Projects</h2>
+
+                <div class="space-y-4">
+                    {
+                        projects.map((project) => (
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
+                                <CodeBracket class="h-6 w-6 text-primary shrink-0" />
+                                <div class="flex-1">
+                                    <div class="font-medium mb-1">
+                                        {project.name}
+                                    </div>
+                                    <div class="text-sm opacity-70">
+                                        {project.description}
+                                    </div>
+                                </div>
+                                <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="btn btn-primary btn-sm"
+                                >
+                                    View project
+                                </a>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<script>
+    // Import animation script
+    import "../scripts/about.ts";
+</script>
