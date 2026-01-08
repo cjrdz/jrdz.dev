@@ -1,6 +1,6 @@
 {
   "media": {
-    "root": "src/assets",
+    "root": "public",
     "public": "public"
   },
   "content": {
