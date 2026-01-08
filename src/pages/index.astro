@@ -1,29 +1,24 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/astro/Navbar.astro";
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-import setupImg from "../assets/setup.png";
-import serverImg from "../assets/server.png";
-import codingImg from "../assets/coding.png";
-import motherboardImg from "../assets/motherboard.png";
+import { sortPostsByDate } from "../lib/utils";
+import { getCategoryById } from "../lib/categories";
+import { formatDateShort } from "../lib/utils";
 import '../styles/home.css';
 
-// Interface slide data
-interface Slide {
-    id: number;
-    src: ImageMetadata;
-    alt: string;
-}
+// Get all published blog posts
+const allPosts = await getCollection("blog", ({ data }) => {
+    return !data.draft;
+});
 
-// Interface data filled in
-const slides: Slide[] = [
-    { id: 1, src: setupImg, alt: "Workspace setup" },
-    { id: 2, src: serverImg, alt: "Server room" },
-    { id: 3, src: codingImg, alt: "Coding on laptop" },
-    { id: 4, src: motherboardImg, alt: "Computer motherboard" }
-];
-// const slide function
+// Sort posts by date (newest first) - these are the most recent/popular posts
+const sortedPosts = sortPostsByDate(allPosts);
+
+// Get top posts for carousel (most recent 4)
+const featuredPosts = sortedPosts.slice(0, 4);
+
+// Navigation helper function
 const getNavigationSlides = (currentIndex: number, totalSlides: number) => ({
     prev: currentIndex === 0 ? totalSlides : currentIndex,
     next: currentIndex === totalSlides - 1 ? 1 : currentIndex + 2
@@ -77,43 +72,96 @@ const getNavigationSlides = (currentIndex: number, totalSlides: number) => ({
             </div>
         </section>
 
-        <!-- Tech Carousel -->
-        <section
-                id="tech-carousel"
-                class="carousel w-full rounded-xl shadow-2xl mb-8 anim-item delay-200"
-                aria-label="Technology showcase carousel"
-        >
-            {slides.map((slide, index) => {
-                const { prev, next } = getNavigationSlides(index, slides.length);
+        <!-- Featured Blog Posts Carousel -->
+        {
+            featuredPosts.length > 0 && (
+                <section
+                        id="blog-carousel"
+                        class="carousel w-full rounded-xl shadow-2xl mb-8 anim-item delay-200"
+                        aria-label="Featured blog posts carousel"
+                >
+                    {featuredPosts.map((post, index) => {
+                        const { prev, next } = getNavigationSlides(index, featuredPosts.length);
+                        const categoryData = getCategoryById(post.data.category);
 
-                return (
-                        <div id={`slide${slide.id}`} class="carousel-item relative w-full">
-                            <Image
-                                    src={slide.src}
-                                    class="w-full h-[400px] object-cover"
-                                    alt={slide.alt}
-                                    loading="eager"
-                            />
-                            <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                                <a
-                                        href={`#slide${prev}`}
-                                        class="btn btn-circle btn-ghost bg-base-100/50 hover:bg-base-100 border-none"
-                                        aria-label="Previous slide"
-                                >
-                                    ❮
-                                </a>
-                                <a
-                                        href={`#slide${next}`}
-                                        class="btn btn-circle btn-ghost bg-base-100/50 hover:bg-base-100 border-none"
-                                        aria-label="Next slide"
-                                >
-                                    ❯
-                                </a>
-                            </div>
-                        </div>
-                );
-            })}
-        </section>
+                        return (
+                                <div id={`slide${index + 1}`} class="carousel-item relative w-full">
+                                    <a
+                                            href={`/blog/${post.slug}`}
+                                            class="block w-full h-full group"
+                                    >
+                                        <div class="card bg-base-100 shadow-xl w-full h-[400px] rounded-xl overflow-hidden">
+                                            <div class="card-body p-8 flex flex-col justify-between h-full">
+                                                <!-- Category Badge -->
+                                                <div class="flex items-center gap-2 mb-4">
+                                                    {
+                                                        categoryData?.icon && (
+                                                            <span class="text-2xl">
+                                                                {categoryData.icon}
+                                                            </span>
+                                                        )
+                                                    }
+                                                    <span class="badge badge-primary badge-lg">
+                                                        {categoryData?.name || post.data.category}
+                                                    </span>
+                                                    {
+                                                        post.data.subcategory && (
+                                                            <span class="badge badge-outline badge-sm">
+                                                                {post.data.subcategory}
+                                                            </span>
+                                                        )
+                                                    }
+                                                </div>
+
+                                                <!-- Title -->
+                                                <h2 class="text-3xl md:text-4xl font-bold mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                                                    {post.data.title}
+                                                </h2>
+
+                                                <!-- Description -->
+                                                <p class="text-base text-base-content/70 line-clamp-3 mb-6 grow">
+                                                    {post.data.description}
+                                                </p>
+
+                                                <!-- Footer -->
+                                                <div class="flex justify-between items-center pt-4 border-t border-base-content/10">
+                                                    <time
+                                                            datetime={post.data.pubDate.toISOString()}
+                                                            class="text-sm text-base-content/60"
+                                                    >
+                                                        {formatDateShort(post.data.pubDate)}
+                                                    </time>
+                                                    <span class="text-primary font-medium group-hover:underline">
+                                                        Read More →
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <!-- Navigation Arrows -->
+                                    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between z-10">
+                                        <a
+                                                href={`#slide${prev}`}
+                                                class="btn btn-circle btn-ghost bg-base-100/80 hover:bg-base-100 border-none"
+                                                aria-label="Previous post"
+                                        >
+                                            ❮
+                                        </a>
+                                        <a
+                                                href={`#slide${next}`}
+                                                class="btn btn-circle btn-ghost bg-base-100/80 hover:bg-base-100 border-none"
+                                                aria-label="Next post"
+                                        >
+                                            ❯
+                                        </a>
+                                    </div>
+                                </div>
+                        );
+                    })}
+                </section>
+            )
+        }
     </div>
 </BaseLayout>
 
