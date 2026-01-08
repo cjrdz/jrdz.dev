@@ -1,14 +1,16 @@
 {
   "media": {
     "root": "src/assets",
-    "public": "public"
+    "public": "public",
+    "includes": ["*.png", "*.jpg", "*.jpeg", "*.webp", "*.gif", "*.svg"]
   },
   "content": {
     "root": "src/content"
   },
   "code": {
-    "root": "src/layouts"
+    "root": "src/layouts",
+    "includes": ["*.astro", "*.ts", "*.js"]
   },
-  "themeConfig": [],
-  "arrangement": []
+  "themeConfig": [ "daisyui", "tailwindcss" ],
+  "arrangement": [ "content", "media", "code" ]
 }
