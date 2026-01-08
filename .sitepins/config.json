@@ -4,7 +4,7 @@
     "public": "public"
   },
   "content": {
-    "root": "src"
+    "root": "src/content"
   },
   "code": {
     "root": "src/layouts"
