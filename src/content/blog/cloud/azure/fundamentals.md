@@ -1,16 +1,21 @@
 ---
-title: "Microsoft Azure Guide"
-description: "Learn the fundamentals of Microsoft Azure cloud computing platform and how to get started with your first Azure resources."
-pubDate: 2026-01-01
-author: "Jonathan Rodriguez"
-category: "cloud"
-subcategory: "azure"
-tags: ["Azure", "Cloud Computing", "Infrastructure", "Beginner"]
-image: "/images/blog/cloud/azure/azure.png"
-video: "https://www.youtube.com/watch?v=oPSHs71mTVU"
+title: Microsoft Azure Guide
+description: >-
+  Learn the fundamentals of Microsoft Azure cloud computing platform and how to
+  get started with your first Azure resources.
+pubDate: 2026-01-08T22:35:00.000Z
+author: Jonathan Rodriguez
+category: cloud
+subcategory: azure
+tags:
+  - Azure
+  - Cloud Computing
+  - Infrastructure
+  - Beginner
+image: /images/blog/cloud/azure/azure.png
+video: https://www.youtube.com/watch?v=oPSHs71mTVU
 draft: false
 ---
-
 ## Getting Started with Microsoft Azure
 
 Microsoft Azure is one of the leading cloud computing platforms in the world. In this comprehensive guide, we'll explore the fundamentals of Azure and help you get started with your cloud journey.
@@ -18,15 +23,16 @@ Microsoft Azure is one of the leading cloud computing platforms in the world. In
 ### What is Microsoft Azure?
 
 <!-- Video section added here! -->
-{{video}}
+
+\{\{video}}
 
 Azure is Microsoft's cloud computing platform that provides a wide range of services including:
 
-- **Virtual Machines**: Scalable computing resources
-- **Storage Solutions**: Blob, File, Queue, and Table storage
-- **Networking**: Virtual networks, load balancers, and VPN gateways
-- **Databases**: SQL Database, Cosmos DB, and more
-- **AI and Machine Learning**: Cognitive services and ML models
+* **Virtual Machines**: Scalable computing resources
+* **Storage Solutions**: Blob, File, Queue, and Table storage
+* **Networking**: Virtual networks, load balancers, and VPN gateways
+* **Databases**: SQL Database, Cosmos DB, and more
+* **AI and Machine Learning**: Cognitive services and ML models
 
 <div class="flex my-6">
   <img 
@@ -37,55 +43,83 @@ Azure is Microsoft's cloud computing platform that provides a wide range of serv
   />
 </div>
 
-### Core Azure Services
+### Installing Azure CLI on Windows
 
-### 1. Compute Services
-Azure offers various compute options to run your applications:
+The Azure Command-Line Interface (CLI) lets you manage Azure resources from your local machine.
 
-```bash
-# Azure CLI example - Create a virtual machine
-az vm create \
-  --resource-group myResourceGroup \
-  --name myVM \
-  --image UbuntuLTS \
-  --admin-username azureuser \
-  --generate-ssh-keys
+#### Install or Update
+
+The MSI and ZIP distributable are used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version.
+
+**Important**: After the installation is complete, you must close and reopen any active terminal window to use the Azure CLI.
+
+#### WinGet (Windows Package Manager)
+
+Use WinGet, Microsoft's Package manager for Windows, to install and manage updates for Azure CLI. By default, WinGet installs the 64-bit Azure CLI on 64-bit operating systems.
+
+**Note**: WinGet is available by default in Windows 11 and modern versions of Windows 10. However, it may not be installed in older versions of Windows. See the [winget documentation](https://learn.microsoft.com/en-us/windows/package-manager/winget/) for installation instructions.
+
+```powershell
+winget install --exact --id Microsoft.AzureCLI
 ```
 
-### 2. Storage Services
-Azure provides different storage types for various needs:
+The `--exact` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `--version <version>` with your desired version to the command. Here's an example:
 
-- **Blob Storage**: For unstructured data
-- **File Storage**: Managed file shares
-- **Queue Storage**: Message queuing service
-- **Table Storage**: NoSQL key-value store
+```powershell
+winget install --exact --id Microsoft.AzureCLI --version 2.67.0
+```
 
-### 3. Networking
-Azure networking services help you connect your resources securely:
+### Setting Up Your Azure Account
 
-- Virtual Networks (VNets)
-- Network Security Groups
-- Application Gateway
-- Azure Load Balancer
+#### Step 1: Sign In to Azure
 
-### Getting Started Steps
+```bash
+az login
+```
 
-1. **Create an Azure Account**: Sign up for a free Azure account
-2. **Understand Resource Groups**: Learn how to organize your resources
-3. **Deploy Your First VM**: Create a virtual machine
-4. **Set Up Storage**: Configure storage accounts
-5. **Implement Security**: Apply security best practices
+This opens your browser for authentication. Once signed in, you'll see your subscription details.
 
-### Best Practices
+#### Step 2: Verify Your Setup
 
-- Always use Resource Groups to organize resources
-- Implement proper naming conventions
-- Use Azure Policy for governance
-- Monitor costs regularly
-- Apply security configurations from day one
+```bash
+# Check your Azure CLI version
+az version
+
+# View your active subscription
+az account show
+
+# List all your subscriptions
+az account list --output table
+```
+
+### Creating a Resource Group
+
+Resource groups are containers that organize your Azure resources. Think of them as folders for your cloud resources.
+
+**Using CMD:**
+
+```bash
+az group create --name myResourceGroup --location eastus
+```
+
+**Using PowerShell:**
+
+```powershell
+az group create `
+  --name myResourceGroup `
+  --location eastus
+```
+
+To verify your resource group was created:
+
+```bash
+az group list --output table
+```
+
+### Next Steps
+
+Now that you have Azure CLI installed and a resource group created, you're ready to start deploying Azure resources!
 
 ### Conclusion
 
-Microsoft Azure provides a robust platform for building, deploying, and managing applications in the cloud. Start with the basics and gradually explore more advanced services as you become comfortable with the platform.
-
-Ready to dive deeper? Check out our next post on Azure networking fundamentals!
+Microsoft Azure provides a robust platform for building, deploying, and managing applications in the cloud. With Azure CLI properly installed and configured, you can efficiently manage your cloud resources directly from PowerShell or Command Prompt. Start with the basics and gradually explore more advanced services as you become comfortable with the platform.
