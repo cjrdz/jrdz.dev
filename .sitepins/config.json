@@ -1,15 +1,15 @@
 {
   "media": {
-    "root": "public/images",
+    "root": "public",
     "public": "public",
-    "includes": ["*.png", "*.jpg", "*.jpeg", "*.webp", "*.gif", "*.svg"]
+    "includes": ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.webp", "**/*.gif", "**/*.svg"]
   },
   "content": {
     "root": "src/content"
   },
   "code": {
     "root": "src/layouts",
-    "includes": ["*.astro", "*.ts", "*.js"]
+    "includes": ["**/*.astro", "**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx"]
   },
   "themeConfig": [ "daisyui", "tailwindcss" ],
   "arrangement": [ "content", "media", "code" ]
