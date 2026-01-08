@@ -6,7 +6,8 @@ author: "Jonathan Rodriguez"
 category: "cloud"
 subcategory: "azure"
 tags: ["Azure", "Cloud Computing", "Infrastructure", "Beginner"]
-image: "/images/azure-fundamentals.jpg"
+image: "/images/blog/cloud/azure/azure.png"
+video: "https://www.youtube.com/watch?v=oPSHs71mTVU"
 draft: false
 ---
 
@@ -16,6 +17,9 @@ Microsoft Azure is one of the leading cloud computing platforms in the world. In
 
 ### What is Microsoft Azure?
 
+<!-- Video section added here! -->
+{{video}}
+
 Azure is Microsoft's cloud computing platform that provides a wide range of services including:
 
 - **Virtual Machines**: Scalable computing resources
@@ -23,6 +27,15 @@ Azure is Microsoft's cloud computing platform that provides a wide range of serv
 - **Networking**: Virtual networks, load balancers, and VPN gateways
 - **Databases**: SQL Database, Cosmos DB, and more
 - **AI and Machine Learning**: Cognitive services and ML models
+
+<div class="flex my-6">
+  <img 
+    src="/images/blog/cloud/azure/azure.png" 
+    alt="Azure Cloud Service Models" 
+    class="w-full h-auto rounded-lg shadow-md transition-transform duration-300 hover:scale-110 cursor-pointer sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl"
+    loading="lazy"
+  />
+</div>
 
 ### Core Azure Services
 

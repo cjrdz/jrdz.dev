@@ -1,6 +1,6 @@
 {
   "media": {
-    "root": "src/assets",
+    "root": "public/images",
     "public": "public",
     "includes": ["*.png", "*.jpg", "*.jpeg", "*.webp", "*.gif", "*.svg"]
   },
