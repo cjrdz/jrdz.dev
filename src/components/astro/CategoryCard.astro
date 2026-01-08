@@ -1,0 +1,109 @@
+---
+import type { Category } from "../../lib/types";
+
+interface Props {
+    category: Category;
+    postCount: number;
+    index?: number;
+}
+
+const { category, postCount, index = 0 } = Astro.props;
+const Icon = category.iconComponent;
+---
+
+<a
+    href={`/blog/${category.id}`}
+    class={`category-card category-card-${index} block group`}
+>
+    <article
+        class="card bg-base-100 shadow-md hover:shadow-lg border border-base-300/50 rounded-xl overflow-hidden h-full"
+    >
+        <!-- Icon Header -->
+        <div
+            class={`p-6 flex items-center justify-center ${category.bgColorClass || "bg-base-200"}`}
+        >
+            {
+                Icon ? (
+                    <Icon
+                        class="w-10 h-10 text-white"
+                        aria-label={category.name}
+                    />
+                ) : (
+                    <span class="text-4xl" aria-label={category.name}>
+                        {category.icon}
+                    </span>
+                )
+            }
+        </div>
+
+        <!-- Content -->
+        <div class="card-body p-6">
+            <h3 class="card-title text-lg mb-2">
+                {category.name}
+            </h3>
+            <p class="text-sm text-base-content/60 mb-4">
+                {category.description}
+            </p>
+
+            <!-- Footer -->
+            <div class="flex justify-between items-center text-sm">
+                <span class="text-base-content/50">
+                    {postCount}
+                    {postCount === 1 ? "post" : "posts"}
+                </span>
+                <span class="text-primary group-hover:underline"> View → </span>
+            </div>
+        </div>
+    </article>
+</a>
+
+<style>
+    /* ===== ANIMATION SYSTEM ===== */
+    article {
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .category-card {
+        --card-opacity: 0;
+        --card-y: 20px;
+        opacity: var(--card-opacity);
+        transform: translateY(var(--card-y));
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .category-card.animate-in {
+        --card-opacity: 1;
+        --card-y: 0px;
+    }
+
+    /* Staggered animation delays */
+    .category-card-0 {
+        transition-delay: 0.05s;
+    }
+    .category-card-1 {
+        transition-delay: 0.1s;
+    }
+    .category-card-2 {
+        transition-delay: 0.15s;
+    }
+    .category-card-3 {
+        transition-delay: 0.2s;
+    }
+
+    /* ===== HOVER EFFECTS ===== */
+    .category-card:hover article {
+        transform: translateY(-2px);
+    }
+
+    /* ===== ACCESSIBILITY ===== */
+    @media (prefers-reduced-motion: reduce) {
+        .category-card {
+            transition: opacity 0.3s ease !important;
+            transform: none !important;
+            opacity: 1;
+        }
+        .category-card:hover article {
+            transform: none !important;
+        }
+    }
+</style>
