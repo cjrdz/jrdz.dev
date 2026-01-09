@@ -1,12 +1,7 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "jrdzdev",
   "compatibility_date": "2026-01-08",
   "assets": {
     "directory": "./dist"
-  },
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
   }
 }
