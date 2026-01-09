@@ -12,11 +12,15 @@ const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);
 
 export async function getStaticPaths() {
-    const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+    // This is the Spanish route (/es/blog/...)
+    // Only get Spanish posts
+    const allEntries = await getCollection("blog", ({ data }) => {
+        if (data.draft) return false;
+        // Filter for Spanish locale only
+        return data.locale === "es";
+    });
     
     // Generate paths for each entry
-    // Astro i18n will automatically create routes for each locale (/blog/... and /es/blog/...)
-    // We filter by locale in the component to ensure only matching entries are shown
     const paths: Array<{ params: { slug: string }; props: { entry: typeof allEntries[0] } }> = [];
     
     for (const entry of allEntries) {
