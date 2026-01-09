@@ -7,9 +7,10 @@ import { categories, getLocalizedCategoryById } from "../../../../lib/categories
 import {
     sortPostsByDate,
     generateCategoryStructuredData,
-    getRelativeLocaleUrl,
 } from "../../../../lib/utils";
 import { getTranslation } from "../../../../lib/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import "../../../../styles/category.css";
 
 const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);
@@ -246,79 +247,7 @@ for (const post of localePosts) {
     </div>
 </BaseLayout>
 
-<style>
-    /* ===== ANIMATIONS ===== */
-    .blog-card {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .blog-card.animate-in {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* ===== RESPONSIVE DESIGN ===== */
-    @media (max-width: 768px) {
-        .blog-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .category-hero {
-            margin-bottom: 2rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .subcategory-section h2 {
-            font-size: 1.25rem;
-        }
-    }
-</style>
-
 <script>
-    interface ObserverConfig {
-        threshold: number;
-        rootMargin: string;
-    }
-
-    const OBSERVER_CONFIG: ObserverConfig = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -80px 0px",
-    };
-
-    const handleIntersection = (
-        entries: IntersectionObserverEntry[],
-        observer: IntersectionObserver,
-    ): void => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const target = entry.target as HTMLElement;
-                target.classList.add("animate-in");
-                observer.unobserve(target);
-            }
-        });
-    };
-
-    const initializeAnimations = (): void => {
-        const observer = new IntersectionObserver(
-            handleIntersection,
-            OBSERVER_CONFIG,
-        );
-
-        // Animate blog card items
-        const blogCards = document.querySelectorAll<HTMLElement>(".blog-card");
-        blogCards.forEach((item) => {
-            observer.observe(item);
-        });
-    };
-
-    // Initialize when DOM is ready
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initializeAnimations);
-    } else {
-        initializeAnimations();
-    }
+    import { initCategoryIndex } from "../../../../lib/client/category";
+    initCategoryIndex();
 </script>

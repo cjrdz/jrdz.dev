@@ -1,0 +1,168 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import Navbar from "../../../../components/astro/Navbar.astro";
+import FloatingBlogMenu from "../../../../components/astro/FloatingBlogMenu.astro";
+import { getLocalizedCategoryById } from "../../../../lib/categories";
+import { formatDate } from "../../../../lib/utils";
+import { getTranslation } from "../../../../lib/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import "../../../../styles/category.css";
+
+const currentLocale = Astro.currentLocale || "en";
+const t = (key: string) => getTranslation(currentLocale, key);
+
+export async function getStaticPaths() {
+    const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+    
+    return allEntries.map(entry => {
+        // Parse slug: remove locale prefix and split into parts
+        const cleanSlug = entry.slug.replace(/^(en|es)\//, '');
+        const [category, ...slugParts] = cleanSlug.split('/');
+        
+        return {
+            params: { 
+                category,
+                slug: slugParts.join('/')
+            },
+            props: { entry }
+        };
+    });
+}
+
+const { entry } = Astro.props;
+const { category } = Astro.params;
+
+// Validate that the entry matches the current locale
+const entryLocale = entry.data.locale || "en";
+if (entryLocale !== currentLocale) {
+    return Astro.redirect(getRelativeLocaleUrl(entryLocale, Astro.url.pathname));
+}
+
+const { Content } = await entry.render();
+const categoryData = getLocalizedCategoryById(entry.data.category, currentLocale);
+---
+
+<BaseLayout
+    title={`${entry.data.title} - Jrdz`}
+    description={entry.data.description}
+>
+    <Navbar />
+
+    <article class="article-container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href={getRelativeLocaleUrl(currentLocale, "/")}>
+                        {t("common.home")}
+                    </a>
+                </li>
+                <li>
+                    <a href={getRelativeLocaleUrl(currentLocale, "/blog")}>
+                        {t("common.blog")}
+                    </a>
+                </li>
+                {categoryData && (
+                    <li>
+                        <a href={getRelativeLocaleUrl(currentLocale, `/blog/${categoryData.id}`)}>
+                            {categoryData.name}
+                        </a>
+                    </li>
+                )}
+                <li aria-current="page">
+                    {entry.data.title}
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <header class="article-header">
+            <div class="category-badges">
+                {categoryData?.icon && (
+                    <span class="category-icon" aria-hidden="true">
+                        {categoryData.icon}
+                    </span>
+                )}
+                <span class="badge badge-primary">
+                    {categoryData?.name || entry.data.category}
+                </span>
+                {entry.data.subcategory && (
+                    <span class="badge badge-outline">
+                        {entry.data.subcategory}
+                    </span>
+                )}
+            </div>
+
+            <h1 class="article-title">{entry.data.title}</h1>
+
+            <div class="article-meta">
+                <time datetime={entry.data.pubDate.toISOString()}>
+                    <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {formatDate(entry.data.pubDate)}
+                </time>
+                
+                {entry.data.updatedDate && (
+                    <span class="updated-date">
+                        <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        {t("common.updated")} {formatDate(entry.data.updatedDate)}
+                    </span>
+                )}
+            </div>
+
+            {entry.data.tags && entry.data.tags.length > 0 && (
+                <div class="tags-container">
+                    {entry.data.tags.map(tag => (
+                        <span class="tag">{tag}</span>
+                    ))}
+                </div>
+            )}
+        </header>
+
+        <!-- Content: prose class applies @tailwindcss/typography for proper markdown/typography rendering -->
+        <div 
+            class="prose-wrapper prose prose-lg max-w-none"
+            id="blog-content"
+            data-video-url={entry.data.video || ''}
+            data-video-title={`${entry.data.title} - Video`}
+        >
+            <Content />
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="article-nav" aria-label="Article navigation">
+            <a 
+                href={getRelativeLocaleUrl(currentLocale, "/blog")}
+                class="nav-button nav-button-secondary"
+            >
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {t("common.allPosts")}
+            </a>
+            
+            {categoryData && (
+                <a
+                    href={getRelativeLocaleUrl(currentLocale, `/blog/${categoryData.id}`)}
+                    class="nav-button nav-button-primary"
+                >
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                    {t("common.moreIn")} {categoryData.name}
+                </a>
+            )}
+        </nav>
+    </article>
+
+    <FloatingBlogMenu categoryData={categoryData} />
+</BaseLayout>
+
+<script>
+    import { initCategorySlug } from "../../../../lib/client/category";
+    initCategorySlug();
+</script>
