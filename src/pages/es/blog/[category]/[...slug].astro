@@ -13,7 +13,11 @@ const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);
 
 export async function getStaticPaths() {
-    const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+    // This page handles /es/blog/... (Spanish locale)
+    // Only include Spanish entries to avoid slug collisions with English posts
+    const allEntries = await getCollection("blog", ({ data }) => 
+        !data.draft && data.locale === "es"
+    );
     
     return allEntries.map(entry => {
         // Parse slug: remove locale prefix and split into parts
@@ -33,10 +37,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { category } = Astro.params;
 
-// Validate that the entry matches the current locale
+// Validate that the entry matches the current locale (safety check)
 const entryLocale = entry.data.locale || "en";
 if (entryLocale !== currentLocale) {
-    return Astro.redirect(getRelativeLocaleUrl(entryLocale, Astro.url.pathname));
+    // Use base path (without /es/ prefix) since getRelativeLocaleUrl adds locale prefix
+    // Build the blog path from params: /blog/{category}/{slug}
+    const blogPath = `/blog/${category}/${Astro.params.slug || ''}`;
+    return Astro.redirect(getRelativeLocaleUrl(entryLocale, blogPath));
 }
 
 const { Content } = await entry.render();
