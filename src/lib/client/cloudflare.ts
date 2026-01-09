@@ -1,41 +1,73 @@
 /**
- * Suppress Cloudflare Insights errors during development
+ * Suppress Cloudflare Insights errors
  * This script prevents console errors when Cloudflare's auto-injected
- * analytics script fails to load in local development environments
+ * analytics script fails to load (e.g., blocked by ad blockers)
  */
 
-// Suppress Cloudflare Insights connection errors (common in local development)
-window.addEventListener(
-    "error",
-    (event) => {
-        if (
-            event.message &&
-            (event.message.includes("cloudflareinsights") ||
-                event.message.includes("beacon.min.js") ||
-                event.filename?.includes("cloudflareinsights") ||
-                event.filename?.includes("beacon.min.js"))
-        ) {
-            event.preventDefault();
-            return false;
-        }
-    },
-    true,
-);
+(function() {
+    'use strict';
+    
+    const isCloudflareInsights = (str: string | null | undefined): boolean => {
+        if (!str) return false;
+        const lower = str.toLowerCase();
+        return lower.includes('cloudflareinsights') || 
+               lower.includes('beacon.min.js') ||
+               lower.includes('static.cloudflareinsights.com');
+    };
 
-// Also catch failed script loads
-window.addEventListener(
-    "error",
-    (event) => {
-        const target = event.target;
-        if (
-            target instanceof HTMLScriptElement &&
-            target.src &&
-            (target.src.includes("cloudflareinsights") ||
-                target.src.includes("beacon.min.js"))
-        ) {
-            event.preventDefault();
-            return false;
+    // Suppress error events for Cloudflare Insights
+    window.addEventListener(
+        "error",
+        (event) => {
+            if (
+                (event.message && isCloudflareInsights(event.message)) ||
+                (event.filename && isCloudflareInsights(event.filename)) ||
+                (event.target instanceof HTMLScriptElement && 
+                 event.target.src && 
+                 isCloudflareInsights(event.target.src))
+            ) {
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+        },
+        true
+    );
+
+    // Suppress unhandled promise rejections
+    window.addEventListener(
+        "unhandledrejection",
+        (event) => {
+            const reason = event.reason;
+            if (
+                (typeof reason === 'string' && isCloudflareInsights(reason)) ||
+                (reason?.message && isCloudflareInsights(reason.message)) ||
+                (reason?.stack && isCloudflareInsights(reason.stack))
+            ) {
+                event.preventDefault();
+                return false;
+            }
+        },
+        true
+    );
+
+    // Intercept console.error to suppress Cloudflare Insights errors
+    const originalConsoleError = console.error;
+    console.error = function(...args: any[]) {
+        const message = args.join(' ');
+        if (isCloudflareInsights(message)) {
+            return; // Suppress the error
         }
-    },
-    true,
-);
+        originalConsoleError.apply(console, args);
+    };
+
+    // Intercept console.warn for Cloudflare Insights warnings
+    const originalConsoleWarn = console.warn;
+    console.warn = function(...args: any[]) {
+        const message = args.join(' ');
+        if (isCloudflareInsights(message)) {
+            return; // Suppress the warning
+        }
+        originalConsoleWarn.apply(console, args);
+    };
+})();

@@ -30,6 +30,11 @@ const {
             const theme = localStorage.getItem("theme") || "dark";
             document.documentElement.setAttribute("data-theme", theme);
         </script>
+
+        <!-- Suppress Cloudflare Insights errors (loads early to catch errors) -->
+        <script>
+            import "../lib/client/cloudflare.ts";
+        </script>
     </head>
 
     <body class="min-h-screen flex flex-col">
@@ -38,8 +43,4 @@ const {
         </main>
         <Footer />
     </body>
-
-    <script>
-        import "../lib/client/cloudflare.ts";
-    </script>
 </html>
