@@ -1,19 +1,69 @@
 ---
 import "../../styles/global.css";
+import "../../styles/components.css";
 import ThemeToggle from "../svelte/ThemeToggle.svelte";
+import LanguageToggle from "../svelte/LanguageToggle.svelte";
+import Icon from "../svelte/Icon.svelte";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 const currentPath = Astro.url.pathname;
+const currentLocale = Astro.currentLocale || "en";
+
+const locales = ["en", "es"];
+
+function getBasePath(pathname: string, currentLocale: string): string {
+    if (currentLocale !== "en" && pathname.startsWith(`/${currentLocale}/`)) {
+        const base = pathname.slice(`/${currentLocale}`.length);
+        return base || "/";
+    }
+    return pathname;
+}
+
+const basePath = getBasePath(Astro.url.pathname, currentLocale);
+
+const localeList = locales.map((locale) => {
+    const targetPath = getRelativeLocaleUrl(locale, basePath);
+    return {
+        locale,
+        path: targetPath,
+    };
+});
+
+const navLabels: Record<string, Record<string, string>> = {
+    en: {
+        home: "Home",
+        blog: "Blog",
+        about: "About",
+    },
+    es: {
+        home: "Inicio",
+        blog: "Blog",
+        about: "Acerca de mi",
+    },
+};
 
 interface NavLink {
     href: string;
     label: string;
+    key: string;
 }
 
 const navLinks: NavLink[] = [
-    { href: "/", label: "Home" },
-    { href: "/blog", label: "Blog" },
-    { href: "/about", label: "About" },
-];
+    { href: "/", label: navLabels[currentLocale]?.home || "Home", key: "home" },
+    {
+        href: "/blog",
+        label: navLabels[currentLocale]?.blog || "Blog",
+        key: "blog",
+    },
+    {
+        href: "/about",
+        label: navLabels[currentLocale]?.about || "About",
+        key: "about",
+    },
+].map((link) => ({
+    ...link,
+    href: getRelativeLocaleUrl(currentLocale, link.href),
+}));
 ---
 
 <header
@@ -21,7 +71,19 @@ const navLinks: NavLink[] = [
     class="navbar bg-base-100/80 backdrop-blur-sm border-b border-base-300 sticky top-0 z-50 shadow-sm transition-all duration-300"
 >
     <div class="navbar-start">
-        <a href="/" class="btn btn-ghost normal-case text-xl font-bold">🏠</a>
+        <a
+            href={getRelativeLocaleUrl(currentLocale, "/")}
+            class="btn btn-ghost normal-case text-xl font-bold group"
+            aria-label={navLabels[currentLocale]?.home || "Home"}
+        >
+            <Icon
+                client:load
+                icon="line-md:home-twotone-alt"
+                width="28"
+                height="28"
+                class="group-hover:scale-110 transition-transform duration-200"
+            />
+        </a>
     </div>
 
     <div class="navbar-center flex">
@@ -41,35 +103,12 @@ const navLinks: NavLink[] = [
         </ul>
     </div>
 
-    <div class="navbar-end">
+    <div class="navbar-end flex items-center gap-2">
+        <LanguageToggle
+            client:load
+            currentLocale={currentLocale}
+            localeList={localeList}
+        />
         <ThemeToggle client:load />
     </div>
 </header>
-
-<style>
-    /* Navbar hover animations */
-    .menu a {
-        position: relative;
-        transition: all 0.3s ease;
-    }
-
-    .menu a::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: currentColor;
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
-
-    .menu a:hover::after {
-        width: 80%;
-    }
-
-    .menu a:hover {
-        transform: translateY(-2px);
-    }
-</style>

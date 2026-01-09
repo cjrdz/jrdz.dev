@@ -13,6 +13,7 @@ const blogCollection = defineCollection({
         image: z.string().optional(),
         video: z.string().optional(),
         draft: z.boolean().default(false),
+        locale: z.string().default('en'), // Add locale support for blog posts
     }),
 });
 

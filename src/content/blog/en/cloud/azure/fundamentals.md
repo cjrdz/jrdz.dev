@@ -14,6 +14,7 @@ tags:
   - Beginner
 image: /images/blog/cloud/azure/azure.png
 video: https://www.youtube.com/watch?v=oPSHs71mTVU
+locale: "en"
 draft: false
 ---
 ## Getting Started with Microsoft Azure

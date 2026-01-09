@@ -1,5 +1,7 @@
 ---
 import type { Category } from "../../lib/types";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import "../../styles/components.css";
 
 interface Props {
     category: Category;
@@ -9,10 +11,21 @@ interface Props {
 
 const { category, postCount, index = 0 } = Astro.props;
 const Icon = category.iconComponent;
+const currentLocale = Astro.currentLocale || "en";
+const categoryUrl = getRelativeLocaleUrl(currentLocale, `/blog/${category.id}`);
+
+// Localized post count text
+const postCountText: Record<string, { singular: string; plural: string }> = {
+    en: { singular: "post", plural: "posts" },
+    es: { singular: " publicación", plural: " publicaciones" },
+};
+const postText = postCount === 1 
+    ? postCountText[currentLocale]?.singular || "post"
+    : postCountText[currentLocale]?.plural || "posts";
 ---
 
 <a
-    href={`/blog/${category.id}`}
+    href={categoryUrl}
     class={`category-card category-card-${index} block group`}
 >
     <article
@@ -48,62 +61,12 @@ const Icon = category.iconComponent;
             <!-- Footer -->
             <div class="flex justify-between items-center text-sm">
                 <span class="text-base-content/50">
-                    {postCount}
-                    {postCount === 1 ? "post" : "posts"}
+                    {postCount}{postText}
                 </span>
-                <span class="text-primary group-hover:underline"> View → </span>
+                <span class="text-primary group-hover:underline">
+                    {currentLocale === "es" ? "Ver →" : "View →"}
+                </span>
             </div>
         </div>
     </article>
 </a>
-
-<style>
-    /* ===== ANIMATION SYSTEM ===== */
-    article {
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .category-card {
-        --card-opacity: 0;
-        --card-y: 20px;
-        opacity: var(--card-opacity);
-        transform: translateY(var(--card-y));
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .category-card.animate-in {
-        --card-opacity: 1;
-        --card-y: 0px;
-    }
-
-    /* Staggered animation delays */
-    .category-card-0 {
-        transition-delay: 0.05s;
-    }
-    .category-card-1 {
-        transition-delay: 0.1s;
-    }
-    .category-card-2 {
-        transition-delay: 0.15s;
-    }
-    .category-card-3 {
-        transition-delay: 0.2s;
-    }
-
-    /* ===== HOVER EFFECTS ===== */
-    .category-card:hover article {
-        transform: translateY(-2px);
-    }
-
-    /* ===== ACCESSIBILITY ===== */
-    @media (prefers-reduced-motion: reduce) {
-        .category-card {
-            transition: opacity 0.3s ease !important;
-            transform: none !important;
-            opacity: 1;
-        }
-        .category-card:hover article {
-            transform: none !important;
-        }
-    }
-</style>

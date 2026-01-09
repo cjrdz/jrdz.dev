@@ -1,0 +1,55 @@
+{
+  "common": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "about": "Acerca de",
+    "readMore": "Leer Más →",
+    "allPosts": "Todas las Publicaciones",
+    "backToAllCategories": "Volver a Todas las Categorías",
+    "moreIn": "Más en",
+    "noPostsYet": "Aún no hay publicaciones",
+    "checkBackSoon": "¡Vuelve pronto para ver nuevo contenido!",
+    "noPostsInCategory": "Aún no hay publicaciones en esta categoría",
+    "post": " publicación",
+    "posts": " publicaciones",
+    "publication": " publicación",
+    "publications": " publicaciones",
+    "updated": "Actualizado:",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "home": {
+    "title": "Hola Mundo 🌍",
+    "welcome": {
+      "paragraph1": "Piensa en esto como tu guía amigable al emocionante mundo de la tecnología. Exploraremos cómo crear proyectos geniales con código, aprenderemos a mantener las computadoras seguras de amenazas en línea (ciberseguridad), y especialmente cómo construir cosas en la nube (computación en la nube). Para la computación en la nube, nos enfocaremos en Microsoft Azure, aprendiendo cómo configurar pequeños proyectos en línea e infraestructura.",
+      "paragraph2": "Usaremos herramientas especiales como plantillas ARM, Terraform, y Bicep para ayudarnos a construir y gestionar cosas fácilmente, y también descubriremos los conceptos básicos de cómo las redes se conectan en la nube. Además, cubriremos sistemas cotidianos como Linux y, por supuesto, Windows. Compartiré lo que aprendo y construyo, y me encantaría escuchar tus pensamientos también. ¡Adelante, explora, y descubramos juntos este increíble viaje tecnológico!"
+    },
+    "exploreBlog": "Explorar Publicaciones del Blog"
+  },
+  "blog": {
+    "title": "Blog Tecnológico",
+    "description": "Explora artículos sobre computación en la nube, ciberseguridad, redes y desarrollo.",
+    "categories": "Categorías",
+    "recentPosts": "Publicaciones Recientes",
+    "emptyState": {
+      "title": "Aún no hay publicaciones",
+      "message": "¡Vuelve pronto para ver nuevo contenido!"
+    }
+  },
+  "about": {
+    "title": "Acerca de - Jrdz",
+    "description": "Conoce más sobre Jonathan Rodriguez, un desarrollador apasionado e ingeniero de la nube",
+    "header": "Desarrollador | Ingeniero DevOps",
+    "bio": "Hola, soy <strong>Jonathan Rodriguez</strong>. He pasado los últimos 3+ años construyendo aplicaciones web y llevándolas a la nube. Realmente disfruto trabajar en el backend con Python y Django, junto con bases de datos PostgreSQL, y también me siento cómodo con el frontend como HTML, CSS, JavaScript y TypeScript. Con el tiempo, me he adentrado más en el lado DevOps, trabajando con Azure y AWS para configurar infraestructura en la nube. Uso herramientas como Terraform, OpenTofu y Ansible para automatizar despliegues y entornos, lo que honestamente hace la vida mucho más fácil. Estoy certificado en Azure (AZ-900) y he trabajado con varios servicios de Azure y AWS. Me encanta configurar pipelines CI/CD que hacen que el despliegue de código sea más rápido y menos estresante. Para mí, se trata de hacer sistemas que sean confiables y no cuesten una fortuna.",
+    "skills": "Habilidades",
+    "frontend": "Frontend:",
+    "backend": "Backend:",
+    "cloudDevops": "Nube y DevOps:",
+    "certifications": "Certificaciones",
+    "myProjects": "Mis Proyectos",
+    "viewProject": "Ver proyecto"
+  },
+  "category": {
+    "general": "General"
+  }
+}

@@ -1,26 +1,8 @@
-// Animation System
-const setupAnimations = () => {
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -80px 0px",
-    };
+/**
+ * Auto-carousel utility for blog post carousels
+ */
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("animate-in");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll(".anim-item").forEach((el) => {
-        observer.observe(el);
-    });
-};
-
-// Carousel System
-class AutoCarousel {
+export class AutoCarousel {
     private container: HTMLElement;
     private readonly items: NodeListOf<HTMLElement>;
     private intervalId: number | undefined;
@@ -212,14 +194,3 @@ class AutoCarousel {
         });
     }
 }
-
-// Initialize everything when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-    setupAnimations();
-
-    // Initialize blog carousel if it exists on the page
-    const blogCarousel = document.getElementById("blog-carousel");
-    if (blogCarousel) {
-        new AutoCarousel("blog-carousel", 4000);
-    }
-});

@@ -1,12 +1,12 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/astro/Navbar.astro";
-import { sortPostsByDate, formatDateShort } from "../lib/utils";
-import { getLocalizedCategoryById } from "../lib/categories";
-import { getTranslation, getTranslationObject } from "../lib/i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/astro/Navbar.astro";
+import { sortPostsByDate, formatDateShort } from "../../lib/utils";
+import { getLocalizedCategoryById } from "../../lib/categories";
+import { getTranslation, getTranslationObject } from "../../lib/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import '../styles/home.css';
+import '../../styles/home.css';
 
 const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);
@@ -157,5 +157,5 @@ const getNavigationSlides = (currentIndex: number, totalSlides: number) => ({
 </BaseLayout>
 
 <script>
-    import "../lib/client/home.ts";
+    import "../../lib/client/home.ts";
 </script>

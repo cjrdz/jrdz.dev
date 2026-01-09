@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/astro/Navbar.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/astro/Navbar.astro";
 import CodeBracket from "astro-heroicons/outline/CodeBracket.astro";
-import { getTranslation, getTranslationObject } from "../lib/i18n";
-import "../styles/about.css";
+import { getTranslation, getTranslationObject } from "../../lib/i18n";
+import "../../styles/about.css";
 
 const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);
@@ -225,5 +225,5 @@ const projects: Project[] = [
 
 <script>
     // Import animation script
-    import "../lib/client/about.ts";
+    import "../../lib/client/about.ts";
 </script>

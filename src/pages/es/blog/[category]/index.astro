@@ -1,15 +1,15 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import Navbar from "../../../components/astro/Navbar.astro";
-import BlogCard from "../../../components/astro/BlogCard.astro";
-import { categories, getLocalizedCategoryById } from "../../../lib/categories";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import Navbar from "../../../../components/astro/Navbar.astro";
+import BlogCard from "../../../../components/astro/BlogCard.astro";
+import { categories, getLocalizedCategoryById } from "../../../../lib/categories";
 import {
     sortPostsByDate,
     generateCategoryStructuredData,
-} from "../../../lib/utils";
-import { getTranslation } from "../../../lib/i18n";
-import { getRelativeLocaleUrl } from "astro:i18n";
+    getRelativeLocaleUrl,
+} from "../../../../lib/utils";
+import { getTranslation } from "../../../../lib/i18n";
 
 const currentLocale = Astro.currentLocale || "en";
 const t = (key: string) => getTranslation(currentLocale, key);

@@ -1,6 +1,8 @@
 ---
 import { formatDateShort } from "../../lib/utils";
-import { getCategoryById } from "../../lib/categories";
+import { getLocalizedCategoryById } from "../../lib/categories";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import "../../styles/components.css";
 
 interface Props {
     slug: string;
@@ -24,10 +26,12 @@ const {
     index = 0,
 } = Astro.props;
 
-const categoryData = getCategoryById(category);
+const currentLocale = Astro.currentLocale || "en";
+const categoryData = getLocalizedCategoryById(category, currentLocale);
+const blogUrl = getRelativeLocaleUrl(currentLocale, `/blog/${slug}`);
 ---
 
-<a href={`/blog/${slug}`} class={`blog-card blog-card-${index} block group`}>
+<a href={blogUrl} class={`blog-card blog-card-${index} block group`}>
     <article
         class="card bg-base-100 shadow-md hover:shadow-lg border border-base-300/50 rounded-xl h-full"
     >
@@ -70,60 +74,3 @@ const categoryData = getCategoryById(category);
         </div>
     </article>
 </a>
-
-<style>
-    /* ===== ANIMATION SYSTEM ===== */
-    article {
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .blog-card {
-        --card-opacity: 0;
-        --card-y: 20px;
-        opacity: var(--card-opacity);
-        transform: translateY(var(--card-y));
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .blog-card.animate-in {
-        --card-opacity: 1;
-        --card-y: 0px;
-    }
-
-    /* Staggered animation delays */
-    .blog-card-0 {
-        transition-delay: 0.05s;
-    }
-    .blog-card-1 {
-        transition-delay: 0.1s;
-    }
-    .blog-card-2 {
-        transition-delay: 0.15s;
-    }
-    .blog-card-3 {
-        transition-delay: 0.2s;
-    }
-    .blog-card-4 {
-        transition-delay: 0.25s;
-    }
-    .blog-card-5 {
-        transition-delay: 0.3s;
-    }
-
-    /* ===== HOVER EFFECTS ===== */
-    .blog-card:hover article {
-        transform: translateY(-2px);
-    }
-
-    /* ===== ACCESSIBILITY ===== */
-    @media (prefers-reduced-motion: reduce) {
-        .blog-card {
-            transition: opacity 0.3s ease !important;
-            transform: none !important;
-            opacity: 1;
-        }
-        .blog-card:hover article {
-            transform: none !important;
-        }
-    }
-</style>

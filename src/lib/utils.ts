@@ -125,3 +125,20 @@ export function generateCategoryStructuredData(category: any, posts: any[]) {
     };
 }
 
+/**
+ * Get a relative URL for a given locale and path
+ * Based on Astro i18n config: defaultLocale is "en" with prefixDefaultLocale: false
+ * So "en" URLs have no prefix, other locales get a prefix
+ */
+export function getRelativeLocaleUrl(locale: string, path: string): string {
+    const defaultLocale = "en";
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    
+    // If it's the default locale, return path without prefix
+    if (locale === defaultLocale) {
+        return normalizedPath;
+    }
+    
+    // For other locales, add the locale prefix
+    return `/${locale}${normalizedPath}`;
+}

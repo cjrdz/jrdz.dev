@@ -1,0 +1,55 @@
+{
+  "common": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "readMore": "Read More →",
+    "allPosts": "All Posts",
+    "backToAllCategories": "Back to All Categories",
+    "moreIn": "More in",
+    "noPostsYet": "No posts yet",
+    "checkBackSoon": "Check back soon for new content!",
+    "noPostsInCategory": "No posts in this category yet",
+    "post": "post",
+    "posts": "posts",
+    "publication": "publication",
+    "publications": "publications",
+    "updated": "Updated:",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "home": {
+    "title": "Hello World 🌍",
+    "welcome": {
+      "paragraph1": "Think of this as your friendly guide to the exciting world of technology. We'll dive into making cool projects with code, learn how to keep computers safe from online threats (cybersecurity), and especially how to build things in the cloud (cloud computing). For cloud computing, we'll focus on Microsoft Azure, learning how to set up small online projects and infrastructure.",
+      "paragraph2": "We'll use special tools like ARM templates, Terraform, and Bicep to help us build and manage things easily, and we'll also figure out the basics of how networks connect in the cloud. Plus, we'll cover everyday systems like Linux and of course, Windows. I'll be sharing what I learn and build, and I'd love to hear your thoughts too! Jump in, look around, and let's explore this amazing tech journey together."
+    },
+    "exploreBlog": "Explore Blog Posts"
+  },
+  "blog": {
+    "title": "Tech Blog",
+    "description": "Explore articles about cloud computing, cybersecurity, networking, and development.",
+    "categories": "Categories",
+    "recentPosts": "Recent Posts",
+    "emptyState": {
+      "title": "No posts yet",
+      "message": "Check back soon for new content!"
+    }
+  },
+  "about": {
+    "title": "About - Jrdz",
+    "description": "Learn more about Jonathan Rodriguez, a passionate developer and cloud engineer",
+    "header": "Developer | DevOps Engineer",
+    "bio": "Hi there, I'm <strong>Jonathan Rodriguez</strong>. I've spent the last 3+ years building web applications and getting them live in the cloud. I really enjoy working on the backend with Python and Django, paired with PostgreSQL databases, and I'm comfortable with the frontend stuff too such as HTML, CSS, JavaScript, and TypeScript. Over time, I've gotten more into the DevOps side of things, working with Azure and AWS to set up cloud infrastructure. I use tools like Terraform, OpenTofu and Ansible to automate deployments and environments, which honestly makes life so much easier. I'm Azure certified (AZ-900) and have worked with various Azure and AWS services. I love setting up CI/CD pipelines that make deploying code faster and less stressful. For me, it's all about making systems that are reliable and don't break the bank.",
+    "skills": "Skills",
+    "frontend": "Frontend:",
+    "backend": "Backend:",
+    "cloudDevops": "Cloud & DevOps:",
+    "certifications": "Certifications",
+    "myProjects": "My Projects",
+    "viewProject": "View project"
+  },
+  "category": {
+    "general": "General"
+  }
+}
