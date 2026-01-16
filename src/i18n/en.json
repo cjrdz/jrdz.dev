@@ -36,20 +36,210 @@
       "message": "Check back soon for new content!"
     }
   },
-  "about": {
-    "title": "About - Jrdz",
-    "description": "Learn more about Jonathan Rodriguez, a passionate developer and cloud engineer",
-    "header": "Developer | DevOps Engineer",
-    "bio": "Hi there, I'm <strong>Jonathan Rodriguez</strong>. I've spent the last 3+ years building web applications and getting them live in the cloud. I really enjoy working on the backend with Python and Django, paired with PostgreSQL databases, and I'm comfortable with the frontend stuff too such as HTML, CSS, JavaScript, and TypeScript. Over time, I've gotten more into the DevOps side of things, working with Azure and AWS to set up cloud infrastructure. I use tools like Terraform, OpenTofu and Ansible to automate deployments and environments, which honestly makes life so much easier. I'm Azure certified (AZ-900) and have worked with various Azure and AWS services. I love setting up CI/CD pipelines that make deploying code faster and less stressful. For me, it's all about making systems that are reliable and don't break the bank.",
-    "skills": "Skills",
-    "frontend": "Frontend:",
-    "backend": "Backend:",
-    "cloudDevops": "Cloud & DevOps:",
-    "certifications": "Certifications",
-    "myProjects": "My Projects",
-    "viewProject": "View project"
-  },
   "category": {
     "general": "General"
+  },
+  "cv": {
+    "pageTitle": "About - Jrdz",
+    "pageDescription": "Learn more about Jonathan Rodriguez, a passionate developer and cloud engineer",
+    "myProjects": "Projects",
+    "name": "Jonathan Rodriguez",
+    "title": "Software Engineer",
+    "location": "La Libertad, El Salvador",
+    "locationLink": "https://maps.app.goo.gl/BUR3nRxeE9BoF56W9",
+    "about": "Goal-oriented person who loves to learn and grow personally and professionally.",
+    "summary": "A Software Engineer specializing in developing high-performance, scalable projects using DevOps tools. I have extensive experience building web applications and DevOps pipelines.",
+    "personalWebsiteUrl": "https://jrdz.dev/about/",
+    "contact": {
+      "email": "jonathanrdzdev@gmail.com",
+      "tel": "+503 7056-5645",
+      "social": [
+        { "name": "GitHub", "url": "https://github.com/cjrdz" },
+        { "name": "LinkedIn", "url": "https://www.linkedin.com/in/jrdzt/" }
+      ]
+    },
+    "work": [
+      {
+        "company": "Banco Agricola El Salvador",
+        "link": "https://www.bancoagricola.com",
+        "title": "DevOps Engineer",
+        "start": "November 2025",
+        "end": "Present",
+        "description": "Developing and maintaining backend pipelines for a high-performance, scalable and secure deployments.",
+        "achievements": [
+          "Engineer scalable pipelines for Java Spring Boot deployments.",
+          "Implement security DevOps practices and compliance with industry standards.",
+          "Manage infrastructure as code using Terraform and CloudFormation.",
+          "Build python scripts for automation tasks and security monitoring.",
+          "Monitor infrastructure health and performance using Grafana and OpenSearch."
+        ],
+        "badges": [
+          "AWS",
+          "Java",
+          "Kafka",
+          "Pipelines",
+          "PostgreSQL",
+          "Liquibase",
+          "Azure DevOps",
+          "Python",
+          "Testcontainers",
+          "Lens",
+          "Docker",
+          "Kubernetes",
+          "Grafana"
+        ]
+      },
+      {
+        "company": "Teknowledge",
+        "link": "https://teknowledge.com",
+        "title": "Azure Support Engineer",
+        "start": "September 2024",
+        "end": "November 2025",
+        "description": "Provided technical support and troubleshooting for Azure cloud services, including virtual machines, Azure Batch, storage, networking, and security.",
+        "achievements": [
+          "Debugged and resolved complex issues related to Azure infrastructure and services.",
+          "Provided guidance and recommendations for optimizing Azure ARM templates, security RBAC, and Azure Policy.",
+          "Troubleshooting Azure deployments through CLI and PowerShell using remote access.",
+          "Replicating deployments with ARM templates, Terraform, Bicep and Azure DevOps."
+        ],
+        "badges": [
+          "Azure",
+          "Infrastructure as Code",
+          "Azure APIM",
+          "KQL",
+          "Azure Batch",
+          "Cloud Services",
+          "Azure DevOps",
+          "Azure RBAC",
+          "Azure Policy",
+          "Azure Monitor",
+          "Batch Explorer"
+        ]
+      },
+      {
+        "company": "The office Gurus El Salvador",
+        "link": "https://theofficegurus.com/el-salvador/",
+        "title": "Back Office",
+        "start": "October 2021",
+        "end": "August 2024",
+        "description": "Developed solutions automation process using Microsoft Power Automate and improve efficiency.",
+        "achievements": [
+          "Built custom Power Automate flow to automate data extraction and transformation.",
+          "Implemented CRM integration using Power Automate to enhance customer engagement.",
+          "Manual task automation using Power Automate to streamline processes and reduce manual errors."
+        ],
+        "badges": [
+          "CRM",
+          "Salesforce",
+          "Microsoft Power Automate",
+          "Automation",
+          "Basic Troubleshooting",
+          "Office 365"
+        ]
+      },
+      {
+        "company": "Sykes / Foundever El Salvador",
+        "link": "https://jobs.foundever.com",
+        "title": "Technical Support Specialist",
+        "start": "January 2019",
+        "end": "September 2021",
+        "description": "Provided exceptional customer support, resolving complex technical issues and providing timely solutions.",
+        "achievements": [
+          "Provided customer service support with troubleshooting skills.",
+          "Built customer relationships through communication and problem-solving."
+        ],
+        "badges": [
+          "CRM",
+          "Customer Service",
+          "Customer Support",
+          "Basic Troubleshooting",
+          "Problem Solving",
+          "Time management",
+          "Communication",
+          "Microsoft Office"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "Azure Resource Move Support",
+        "description": "Tool to check Azure resource move support across regions and subscriptions",
+        "link": "https://azmvsupport.vercel.app",
+        "technologies": ["TypeScript", "Svelte", "Vercel"]
+      },
+      {
+        "name": "Azure Resource Move Scraper",
+        "description": "Python scraper for Azure documentation on resource move operations",
+        "link": "https://github.com/cjrdz/azmvscrapy",
+        "technologies": ["Python", "Scrapy"]
+      },
+      {
+        "name": "Isho's Factory web",
+        "description": "Website for Isho's Gelatos & Sorbetes - El Salvador",
+        "link": "https://ishos-factory.vercel.app",
+        "technologies": ["Astro", "TypeScript", "Vercel"]
+      }
+    ],
+    "education": [
+      {
+        "school": "ITCA FEPADE Santa Tecla",
+        "degree": "Software Engineering",
+        "start": "2022",
+        "end": "2024"
+      },
+      {
+        "school": "EIJ Fundación San Andres",
+        "degree": "English Scholarship",
+        "start": "2016",
+        "end": "2018"
+      },
+      {
+        "school": "Jose Damian Villacorta",
+        "degree": "High School Diploma",
+        "start": "2016",
+        "end": "2017"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Cloud and DevOps Fundamentals",
+        "issuer": "Platzi",
+        "link": "https://platzi.com/p/jonathanrdzdev/ruta/30095-fundamentos-de-cloud-y-devops/diploma/detalle/",
+        "date": "2025",
+        "credentialId": "f0cbbdc9-0ea2-4b45-9ac4-9ac01b28dde8-0dcbaa3e-e760-4434-8d04-f66ad34784cb"
+      },
+      {
+        "name": "Microsoft Certified: Azure Fundamentals (AZ-900)",
+        "issuer": "Microsoft",
+        "link": "https://learn.microsoft.com/en-us/users/jrdz/credentials/63eb8b4305fa1a14?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        "date": "2025",
+        "credentialId": "63EB8B4305FA1A14"
+      },
+      {
+        "name": "Azure Developer - ARM - Specialist (L200)",
+        "issuer": "QA Ltd",
+        "date": "2024",
+        "credentialId": "22246888"
+      }
+    ],
+    "skills": [
+      "Python",
+      "AWS",
+      "Azure",
+      "DevOps",
+      "Astro JS",
+      "Svelte JS",
+      "TypeScript",
+      "SQL",
+      "PostreSQL",
+      "Docker",
+      "Kubernetes",
+      "Podman",
+      "Linux",
+      "Ansible",
+      "Shell Scripting",
+      "Bash Scripting",
+      "Git"
+    ]
   }
 }

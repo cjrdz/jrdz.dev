@@ -1,0 +1,16 @@
+---
+import { getCVData } from "../../../data/cv";
+import EducationItem from "./EducationItem.astro";
+
+const currentLocale = Astro.currentLocale || "en";
+const CV_DATA = getCVData(currentLocale);
+const {education} = CV_DATA;
+---
+<section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
+    <h2 class="text-xl font-bold text-primary" id="education-section">Education</h2>
+    <div class="space-y-4 print:space-y-2" role="feed" aria-labelledby="education-section">
+        {education.map((entry) => (
+            <EducationItem {...entry}/>
+        ))}
+    </div>
+</section>

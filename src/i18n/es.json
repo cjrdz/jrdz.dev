@@ -36,20 +36,210 @@
       "message": "¡Vuelve pronto para ver nuevo contenido!"
     }
   },
-  "about": {
-    "title": "Acerca de - Jrdz",
-    "description": "Conoce más sobre Jonathan Rodriguez, un desarrollador apasionado e ingeniero de la nube",
-    "header": "Desarrollador | Ingeniero DevOps",
-    "bio": "Hola, soy <strong>Jonathan Rodriguez</strong>. He pasado los últimos 3+ años construyendo aplicaciones web y llevándolas a la nube. Realmente disfruto trabajar en el backend con Python y Django, junto con bases de datos PostgreSQL, y también me siento cómodo con el frontend como HTML, CSS, JavaScript y TypeScript. Con el tiempo, me he adentrado más en el lado DevOps, trabajando con Azure y AWS para configurar infraestructura en la nube. Uso herramientas como Terraform, OpenTofu y Ansible para automatizar despliegues y entornos, lo que honestamente hace la vida mucho más fácil. Estoy certificado en Azure (AZ-900) y he trabajado con varios servicios de Azure y AWS. Me encanta configurar pipelines CI/CD que hacen que el despliegue de código sea más rápido y menos estresante. Para mí, se trata de hacer sistemas que sean confiables y no cuesten una fortuna.",
-    "skills": "Habilidades",
-    "frontend": "Frontend:",
-    "backend": "Backend:",
-    "cloudDevops": "Nube y DevOps:",
-    "certifications": "Certificaciones",
-    "myProjects": "Mis Proyectos",
-    "viewProject": "Ver proyecto"
-  },
   "category": {
     "general": "General"
+  },
+  "cv": {
+    "pageTitle": "Acerca de - Jrdz",
+    "pageDescription": "Conoce más sobre Jonathan Rodriguez, un desarrollador apasionado e ingeniero de la nube",
+    "myProjects": "Proyectos",
+    "name": "Jonathan Rodriguez",
+    "title": "Ingeniero de Software",
+    "location": "La Libertad, El Salvador",
+    "locationLink": "https://maps.app.goo.gl/BUR3nRxeE9BoF56W9",
+    "about": "Persona orientada a objetivos que ama aprender y crecer personal y profesionalmente.",
+    "summary": "Ingeniero de Software especializado en desarrollar proyectos de alto rendimiento y escalables utilizando herramientas DevOps. Tengo amplia experiencia construyendo aplicaciones web y pipelines DevOps.",
+    "personalWebsiteUrl": "https://jrdz.dev/es/about/",
+    "contact": {
+      "email": "jonathanrdzdev@gmail.com",
+      "tel": "+503 7056-5645",
+      "social": [
+        { "name": "GitHub", "url": "https://github.com/cjrdz" },
+        { "name": "LinkedIn", "url": "https://www.linkedin.com/in/jrdzt/" }
+      ]
+    },
+    "work": [
+      {
+        "company": "Banco Agricola El Salvador",
+        "link": "https://www.bancoagricola.com",
+        "title": "Ingeniero DevOps",
+        "start": "Noviembre 2025",
+        "end": "Presente",
+        "description": "Desarrollando y manteniendo pipelines backend para despliegues de alto rendimiento, escalables y seguros.",
+        "achievements": [
+          "Ingeniería de pipelines escalables para despliegues de Java Spring Boot.",
+          "Implementación de prácticas de seguridad DevOps y cumplimiento con estándares de la industria.",
+          "Gestión de infraestructura como código usando Terraform y CloudFormation.",
+          "Construcción de scripts en Python para tareas de automatización y monitoreo de seguridad.",
+          "Monitoreo de salud y rendimiento de infraestructura usando Grafana y OpenSearch."
+        ],
+        "badges": [
+          "AWS",
+          "Java",
+          "Kafka",
+          "Pipelines",
+          "PostgreSQL",
+          "Liquibase",
+          "Azure DevOps",
+          "Python",
+          "Testcontainers",
+          "Lens",
+          "Docker",
+          "Kubernetes",
+          "Grafana"
+        ]
+      },
+      {
+        "company": "Teknowledge",
+        "link": "https://teknowledge.com",
+        "title": "Ingeniero de Soporte Azure",
+        "start": "Septiembre 2024",
+        "end": "Noviembre 2025",
+        "description": "Brindé soporte técnico y resolución de problemas para servicios en la nube de Azure, incluyendo máquinas virtuales, Azure Batch, almacenamiento, redes y seguridad.",
+        "achievements": [
+          "Depuré y resolví problemas complejos relacionados con infraestructura y servicios de Azure.",
+          "Brindé orientación y recomendaciones para optimizar plantillas ARM de Azure, RBAC de seguridad y Azure Policy.",
+          "Resolución de problemas de despliegues de Azure a través de CLI y PowerShell usando acceso remoto.",
+          "Replicación de despliegues con plantillas ARM, Terraform, Bicep y Azure DevOps."
+        ],
+        "badges": [
+          "Azure",
+          "Infraestructura como Código",
+          "Azure APIM",
+          "KQL",
+          "Azure Batch",
+          "Servicios en la Nube",
+          "Azure DevOps",
+          "Azure RBAC",
+          "Azure Policy",
+          "Azure Monitor",
+          "Batch Explorer"
+        ]
+      },
+      {
+        "company": "The office Gurus El Salvador",
+        "link": "https://theofficegurus.com/el-salvador/",
+        "title": "Back Office",
+        "start": "Octubre 2021",
+        "end": "Agosto 2024",
+        "description": "Desarrollé soluciones de automatización de procesos usando Microsoft Power Automate y mejoré la eficiencia.",
+        "achievements": [
+          "Construí flujos personalizados de Power Automate para automatizar extracción y transformación de datos.",
+          "Implementé integración CRM usando Power Automate para mejorar el compromiso del cliente.",
+          "Automatización de tareas manuales usando Power Automate para agilizar procesos y reducir errores manuales."
+        ],
+        "badges": [
+          "CRM",
+          "Salesforce",
+          "Microsoft Power Automate",
+          "Automatización",
+          "Resolución Básica de Problemas",
+          "Office 365"
+        ]
+      },
+      {
+        "company": "Sykes / Foundever El Salvador",
+        "link": "https://jobs.foundever.com",
+        "title": "Especialista en Soporte Técnico",
+        "start": "Enero 2019",
+        "end": "Septiembre 2021",
+        "description": "Brindé soporte excepcional al cliente, resolviendo problemas técnicos complejos y proporcionando soluciones oportunas.",
+        "achievements": [
+          "Brindé soporte de servicio al cliente con habilidades de resolución de problemas.",
+          "Construí relaciones con clientes a través de comunicación y resolución de problemas."
+        ],
+        "badges": [
+          "CRM",
+          "Servicio al Cliente",
+          "Soporte al Cliente",
+          "Resolución Básica de Problemas",
+          "Resolución de Problemas",
+          "Gestión del Tiempo",
+          "Comunicación",
+          "Microsoft Office"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "Azure Resource Move Support",
+        "description": "Herramienta para verificar el soporte de movimiento de recursos de Azure entre regiones y suscripciones",
+        "link": "https://azmvsupport.vercel.app",
+        "technologies": ["TypeScript", "Svelte", "Vercel"]
+      },
+      {
+        "name": "Azure Resource Move Scraper",
+        "description": "Scraper en Python para la documentación de Azure sobre operaciones de movimiento de recursos",
+        "link": "https://github.com/cjrdz/azmvscrapy",
+        "technologies": ["Python", "Scrapy"]
+      },
+      {
+        "name": "Isho's Factory web",
+        "description": "Sitio web para Isho's Gelatos & Sorbetes - El Salvador",
+        "link": "https://ishos-factory.vercel.app",
+        "technologies": ["Astro", "TypeScript", "Vercel"]
+      }
+    ],
+    "education": [
+      {
+        "school": "ITCA FEPADE Santa Tecla",
+        "degree": "Ingeniería de Software",
+        "start": "2022",
+        "end": "2024"
+      },
+      {
+        "school": "EIJ Fundación San Andres",
+        "degree": "Beca de Inglés",
+        "start": "2016",
+        "end": "2018"
+      },
+      {
+        "school": "Jose Damian Villacorta",
+        "degree": "Bachillerato",
+        "start": "2016",
+        "end": "2017"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Fundamentos de Cloud y DevOps",
+        "issuer": "Platzi",
+        "link": "https://platzi.com/p/jonathanrdzdev/ruta/30095-fundamentos-de-cloud-y-devops/diploma/detalle/",
+        "date": "2025",
+        "credentialId": "f0cbbdc9-0ea2-4b45-9ac4-9ac01b28dde8-0dcbaa3e-e760-4434-8d04-f66ad34784cb"
+      },
+      {
+        "name": "Microsoft Certified: Azure Fundamentals (AZ-900)",
+        "issuer": "Microsoft",
+        "link": "https://learn.microsoft.com/en-us/users/jrdz/credentials/63eb8b4305fa1a14?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        "date": "2025",
+        "credentialId": "63EB8B4305FA1A14"
+      },
+      {
+        "name": "Azure Developer - ARM - Especialista (L200)",
+        "issuer": "QA Ltd",
+        "date": "2024",
+        "credentialId": "22246888"
+      }
+    ],
+    "skills": [
+      "Python",
+      "AWS",
+      "Azure",
+      "DevOps",
+      "Astro JS",
+      "Svelte JS",
+      "TypeScript",
+      "SQL",
+      "PostreSQL",
+      "Docker",
+      "Kubernetes",
+      "Podman",
+      "Linux",
+      "Ansible",
+      "Shell Scripting",
+      "Bash Scripting",
+      "Git"
+    ]
   }
 }

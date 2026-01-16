@@ -1,0 +1,15 @@
+---
+interface Props {
+    variant?: "primary" | "secondary";
+}
+
+const {variant = "primary"} = Astro.props;
+---
+<div class:list={[
+    "badge",
+    "badge-soft",
+    variant === "primary" ? "badge-primary" : "badge-secondary",
+    "print:text-[10px]"
+]}>
+    <slot/>
+</div>

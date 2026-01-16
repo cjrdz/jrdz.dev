@@ -1,0 +1,25 @@
+---
+import type {Education} from "../../../data/cv";
+
+interface Props extends Education {
+}
+
+const {school, degree, start, end} = Astro.props;
+---
+<article role="article" class="card bg-base-100 shadow-sm mb-2 print:mb-1">
+    <div class="card-body p-4 print:p-2">
+        <div class="flex flex-col space-y-1.5">
+            <div class="flex items-center justify-between gap-x-2 text-base">
+                <h3 class="font-semibold leading-none">
+                    {school}
+                </h3>
+                <div class="text-sm tabular-nums opacity-60" aria-label={`Period: ${start} to ${end}`}>
+                    {start} - {end}
+                </div>
+            </div>
+        </div>
+        <div class="text-pretty text-sm mt-2 opacity-80 print:text-[12px]">
+            {degree}
+        </div>
+    </div>
+</article>

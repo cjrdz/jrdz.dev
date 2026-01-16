@@ -1,0 +1,16 @@
+---
+import { getCVData } from "../../../data/cv";
+import CertificationItem from "./CertificationItem.astro";
+
+const currentLocale = Astro.currentLocale || "en";
+const CV_DATA = getCVData(currentLocale);
+const {certifications} = CV_DATA;
+---
+<section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
+    <h2 class="text-xl font-bold text-primary" id="certifications-section">Certifications</h2>
+    <div class="space-y-4 print:space-y-2" role="feed" aria-labelledby="certifications-section">
+        {certifications.map((certification) => (
+            <CertificationItem {...certification}/>
+        ))}
+    </div>
+</section>

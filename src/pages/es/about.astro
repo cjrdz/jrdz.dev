@@ -1,226 +1,54 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/astro/Navbar.astro";
-import CodeBracket from "astro-heroicons/outline/CodeBracket.astro";
 import { getTranslation, getTranslationObject } from "../../lib/i18n";
+import Header from "../../components/astro/cv/Header.astro";
+import Summary from "../../components/astro/cv/Summary.astro";
+import Projects from "../../components/astro/cv/Projects.astro";
+import WorkExperience from "../../components/astro/cv/WorkExperience.astro";
+import Education from "../../components/astro/cv/Education.astro";
+import Certifications from "../../components/astro/cv/Certifications.astro";
+import Skills from "../../components/astro/cv/Skills.astro";
 import "../../styles/about.css";
 
-const currentLocale = Astro.currentLocale || "en";
+const currentLocale = Astro.currentLocale || "es";
 const t = (key: string) => getTranslation(currentLocale, key);
-const aboutT = getTranslationObject(currentLocale, "about") || {};
-
-interface Project {
-    name: string;
-    url: string;
-    description: string;
-}
-
-// Projects are the same in both languages, but descriptions differ
-const projects: Project[] = [
-    {
-        name: "Azure Resource Move Support",
-        url: "https://azmvsupport.vercel.app/",
-        description: currentLocale === "es"
-            ? "Herramienta para verificar el soporte de movimiento de recursos de Azure entre regiones y suscripciones"
-            : "Tool to check Azure resource move support across regions and subscriptions",
-    },
-    {
-        name: "Azure Resource Move Scraper",
-        url: "https://github.com/cjrdz/azmvscrapy",
-        description: currentLocale === "es"
-            ? "Scraper en Python para la documentación de Azure sobre operaciones de movimiento de recursos"
-            : "Python scraper for Azure documentation on resource move operations",
-    },
-    {
-        name: "Isho's Factory web",
-        url: "https://ishos-factory.vercel.app",
-        description: currentLocale === "es"
-            ? "Sitio web para Isho's Gelatos & Sorbetes - El Salvador"
-            : "Website for Isho's Gelatos & Sorbetes - El Salvador",
-    },
-];
+const cvT = getTranslationObject(currentLocale, "cv") || {};
 ---
 
 <BaseLayout
-    title={typeof aboutT.title === "string" ? aboutT.title : t("about.title")}
-    description={typeof aboutT.description === "string" ? aboutT.description : t("about.description")}
+    title={typeof cvT.pageTitle === "string" ? cvT.pageTitle : t("cv.pageTitle")}
+    description={typeof cvT.pageDescription === "string" ? cvT.pageDescription : t("cv.pageDescription")}
 >
     <Navbar />
 
-    <div class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Header -->
-        <div class="text-center mb-2 anim-item">
-            <h2 class="text-3xl font-bold mb-2 text-primary">
-                {aboutT.header || t("about.header")}
-            </h2>
-        </div>
-
-        <!-- About Section -->
-        <div class="card bg-base-100 shadow-xl mb-3 anim-item delay-100">
-            <div class="card-body">
-                <p class="text-lg leading-relaxed" set:html={t("about.bio")} />
+    <main class="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-11 md:p-8 lg:p-16" id="main-content">
+        <section class="mx-auto w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl space-y-8 bg-base-100 print:space-y-4 print:max-w-2xl" aria-label="CV Content">
+            <div class="anim-item">
+                <Header/>
             </div>
-        </div>
-
-        <!-- Skills Section -->
-        <div
-            class="collapse collapse-arrow bg-base-100 shadow-xl mb-3 anim-item delay-200"
-        >
-            <input type="checkbox" checked aria-label={t("about.skills")} />
-            <div class="collapse-title text-xl font-semibold">{aboutT.skills || t("about.skills")}</div>
-            <div class="collapse-content">
-                <div class="space-y-6">
-                    <!-- Frontend -->
-                    <div>
-                        <h3
-                            class="text-lg font-semibold mb-3 flex items-center gap-2"
-                        >
-                            <span class="text-primary">→</span> {aboutT.frontend || t("about.frontend")}
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            {
-                                [
-                                    "HTML",
-                                    "CSS",
-                                    "JavaScript",
-                                    "TypeScript",
-                                    "Astro.js",
-                                    "Svelte.js",
-                                    "Vue.js",
-                                    "Tailwind CSS",
-                                    "DaisyUI",
-                                    "Pico CSS",
-                                    "Bulma CSS",
-                                ].map((skill) => (
-                                    <div class="badge badge-lg badge-outline">
-                                        {skill}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-
-                    <!-- Backend -->
-                    <div>
-                        <h3
-                            class="text-lg font-semibold mb-3 flex items-center gap-2"
-                        >
-                            <span class="text-primary">→</span> {aboutT.backend || t("about.backend")}
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            {
-                                [
-                                    "Python",
-                                    "Django",
-                                    "PHP",
-                                    "Java",
-                                    "SQL",
-                                    "PostgreSQL",
-                                    "MySQL",
-                                    "MongoDB",
-                                    "Git",
-                                    "GitHub",
-                                    "Linux",
-                                ].map((skill) => (
-                                    <div class="badge badge-lg badge-outline">
-                                        {skill}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-
-                    <!-- Cloud & DevOps -->
-                    <div>
-                        <h3
-                            class="text-lg font-semibold mb-3 flex items-center gap-2"
-                        >
-                            <span class="text-primary">→</span> {aboutT.cloudDevops || t("about.cloudDevops")}
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            {
-                                [
-                                    "Azure",
-                                    "AWS",
-                                    "Docker",
-                                    "Kubernetes",
-                                    "Terraform",
-                                    "OpenTofu",
-                                    "Ansible",
-                                    "CI/CD",
-                                    "Azure DevOps",
-                                    "ARM Templates",
-                                    "Bicep",
-                                ].map((skill) => (
-                                    <div class="badge badge-lg badge-outline">
-                                        {skill}
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
+            <div class="space-y-8 print:space-y-4">
+                <div class="anim-item delay-100">
+                    <Summary/>
+                </div>
+                <div class="anim-item delay-200">
+                    <Projects/>
+                </div>
+                <div class="anim-item delay-250">
+                    <WorkExperience/>
+                </div>
+                <div class="anim-item delay-300">
+                    <Education/>
+                </div>
+                <div class="anim-item delay-250">
+                    <Certifications/>
+                </div>
+                <div class="anim-item delay-300">
+                    <Skills/>
                 </div>
             </div>
-        </div>
-
-        <!-- Certificates Section -->
-        <div class="card bg-base-100 shadow-xl mb-3 anim-item delay-250">
-            <div class="card-body">
-                <h2 class="card-title text-2xl mb-4">{aboutT.certifications || t("about.certifications")}</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div class="flex items-start gap-3">
-                        <span class="text-primary text-xl">✓</span>
-                        <span>Azure Fundamentals (AZ-900)</span>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <span class="text-primary text-xl">✓</span>
-                        <span>ARM Foundational (L100) & Specialist (L200)</span>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <span class="text-primary text-xl">✓</span>
-                        <span>Azure Cloud Service (L100)</span>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <span class="text-primary text-xl">✓</span>
-                        <span>Azure Batch (L100)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Projects Section -->
-        <div class="card bg-base-100 shadow-xl anim-item delay-300">
-            <div class="card-body">
-                <h2 class="card-title text-2xl mb-4">{aboutT.myProjects || t("about.myProjects")}</h2>
-
-                <div class="space-y-4">
-                    {
-                        projects.map((project) => (
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-base-200 rounded-lg hover:bg-base-300 transition-colors">
-                                <CodeBracket class="h-6 w-6 text-primary shrink-0" />
-                                <div class="flex-1">
-                                    <div class="font-medium mb-1">
-                                        {project.name}
-                                    </div>
-                                    <div class="text-sm opacity-70">
-                                        {project.description}
-                                    </div>
-                                </div>
-                                <a
-                                    href={project.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="btn btn-primary btn-sm"
-                                >
-                                    {aboutT.viewProject || t("about.viewProject")}
-                                </a>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </BaseLayout>
 
 <script>

@@ -2,4 +2,75 @@
 @plugin "daisyui" {
     themes: all;
 }
-@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/typography" {}
+
+/* Print optimization styles */
+@media print {
+    @page {
+        margin: 1cm;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* Hide navigation and footer when printing */
+    nav,
+    footer,
+    .print\\:hidden {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+    
+    /* Avoid breaking inside important sections */
+    section,
+    article {
+        page-break-inside: avoid;
+    }
+    
+    /* Optimize spacing for print */
+    .print\\:space-y-2 > * + * {
+        margin-top: 0.5rem;
+    }
+    
+    .print\\:space-y-4 > * + * {
+        margin-top: 1rem;
+    }
+    
+    /* Ensure links are visible in print */
+    a {
+        color: black !important;
+        text-decoration: underline;
+    }
+    
+    /* Optimize card styling for print */
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #e5e7eb;
+    }
+    
+    /* Ensure main content takes full width */
+    main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Remove sticky positioning and shadows */
+    .sticky, .fixed {
+        position: static !important;
+    }
+    
+    .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl {
+        box-shadow: none !important;
+    }
+}

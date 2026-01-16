@@ -1,0 +1,14 @@
+---
+import { getCVData } from '../../../data/cv';
+
+const currentLocale = Astro.currentLocale || "en";
+const CV_DATA = getCVData(currentLocale);
+const {summary} = CV_DATA;
+---
+<section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
+    <h2 class="text-xl font-bold text-primary" id="about-section">About</h2>
+    <div class="text-pretty text-sm opacity-80 print:text-[12px]"
+         aria-labelledby="about-section">
+        {summary}
+    </div>
+</section>

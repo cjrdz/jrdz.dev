@@ -1,0 +1,40 @@
+---
+import Badge from "./common/Badge.astro";
+import type {Project} from "../../../data/cv";
+
+interface Props extends Project {
+}
+
+const {name, description, link, technologies} = Astro.props;
+---
+<article role="article" class="card bg-base-100 shadow-sm mb-4 print:mb-2">
+    <div class="card-body p-4 print:p-2">
+        <div class="flex flex-col space-y-1.5 print:space-y-1">
+            <div class="flex items-center justify-between gap-x-2 text-base">
+                <h3 class="font-semibold leading-none print:text-sm">
+                    {link ? (
+                        <a href={link} target="_blank" rel="noopener noreferrer" class="hover:underline link link-primary">
+                            {name}
+                        </a>
+                    ) : (
+                        name
+                    )}
+                </h3>
+            </div>
+        </div>
+        <div class="text-pretty text-sm opacity-80 mt-2 print:text-[12px]">
+            {description}
+        </div>
+        {technologies && technologies.length > 0 && (
+            <div class="mt-2">
+                <ul class="flex list-none flex-wrap gap-1 p-0" aria-label="Technologies used">
+                    {technologies.map((tech) => (
+                        <li>
+                            <Badge variant="primary">{tech}</Badge>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
+    </div>
+</article>
