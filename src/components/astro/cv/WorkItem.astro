@@ -1,8 +1,15 @@
 ---
 import Badge from "./common/Badge.astro";
-import type {Work} from "../../../data/cv";
 
-interface Props extends Work {
+interface Props {
+    company: string;
+    link: string;
+    title: string;
+    start: string;
+    end: string | null;
+    description: string;
+    achievements?: string[];
+    badges?: string[];
 }
 
 const {company, link, title, start, end, description, achievements, badges} = Astro.props

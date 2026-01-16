@@ -1,0 +1,22 @@
+---
+type: "skills"
+locale: "es"
+skills:
+  - "Python"
+  - "AWS"
+  - "Azure"
+  - "DevOps"
+  - "Astro JS"
+  - "Svelte JS"
+  - "TypeScript"
+  - "SQL"
+  - "PostreSQL"
+  - "Docker"
+  - "Kubernetes"
+  - "Podman"
+  - "Linux"
+  - "Ansible"
+  - "Shell Scripting"
+  - "Bash Scripting"
+  - "Git"
+---

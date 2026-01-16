@@ -1,5 +1,6 @@
 ---
-import { getCVData } from '../../../data/cv';
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import LinkButton from "./common/LinkButton.astro";
 import LinkedIn from "./icons/LinkedIn.astro";
 import GitHub from "./icons/GitHub.astro";
@@ -7,14 +8,41 @@ import Email from "./icons/Email.astro";
 import Phone from "./icons/Phone.astro";
 import Globe from "./icons/Globe.astro";
 
-import {Image} from 'astro:assets'
-import avatarImage from '../../../assets/Me.jpg';
-
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {name, about, personalWebsiteUrl, contact, location, locationLink} = CV_DATA;
+const personalEntries = await getCollection(
+    "cv",
+    ({ data }) => data.type === "personal" && data.locale === currentLocale,
+);
+const personal = personalEntries[0];
+if (!personal || personal.data.type !== "personal") {
+    throw new Error(`Personal data not found for locale: ${currentLocale}`);
+}
+
+const {
+    name,
+    about,
+    location,
+    locationLink,
+    email,
+    phone,
+    github,
+    linkedin,
+    website,
+} = personal.data;
+const personalWebsiteUrl = website;
+const contact = {
+    email,
+    tel: phone,
+    social: [
+        { name: "GitHub", url: github },
+        { name: "LinkedIn", url: linkedin },
+    ],
+};
 ---
-<header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-8 print:mb-4">
+
+<header
+    class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-8 print:mb-4"
+>
     <div class="flex-1 space-y-1.5">
         <h1 class="text-2xl font-bold text-primary" id="cv-name">
             {name}
@@ -23,39 +51,54 @@ const {name, about, personalWebsiteUrl, contact, location, locationLink} = CV_DA
             {about}
         </p>
         <p class="max-w-md items-center text-pretty text-xs">
-            <a class="inline-flex gap-x-1.5 align-baseline leading-none hover:underline link link-primary"
-               href={locationLink}
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label={`Location: ${location}`}>
-                <Globe class="size-3"/>
+            <a
+                class="inline-flex gap-x-1.5 align-baseline leading-none hover:underline link link-primary"
+                href={locationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Location: ${location}`}
+            >
+                <Globe class="size-3" />
                 {location}
             </a>
         </p>
-        <div class="flex list-none gap-x-1 pt-1 text-sm opacity-80 print:hidden"
-             aria-label="Contact links">
+        <div
+            class="flex list-none gap-x-1 pt-1 text-sm opacity-80 print:hidden"
+            aria-label="Contact links"
+        >
             <LinkButton href={personalWebsiteUrl} ariaLabel="Website">
-                <Globe class="size-4"/>
+                <Globe class="size-4" />
             </LinkButton>
             <LinkButton href={`mailto:${contact.email}`} ariaLabel="Email">
-                <Email class="size-4"/>
+                <Email class="size-4" />
             </LinkButton>
             <LinkButton href={`tel:${contact.tel}`} ariaLabel="Phone">
-                <Phone class="size-4"/>
+                <Phone class="size-4" />
             </LinkButton>
-            <LinkButton href={contact.social[0].url} ariaLabel={contact.social[0].name}>
-                <GitHub class="size-4"/>
+            <LinkButton
+                href={contact.social[0].url}
+                ariaLabel={contact.social[0].name}
+            >
+                <GitHub class="size-4" />
             </LinkButton>
-            <LinkButton href={contact.social[1].url} ariaLabel={contact.social[1].name}>
-                <LinkedIn class="size-4"/>
+            <LinkButton
+                href={contact.social[1].url}
+                ariaLabel={contact.social[1].name}
+            >
+                <LinkedIn class="size-4" />
             </LinkButton>
         </div>
-        <div class="hidden gap-x-2 text-sm opacity-80 print:flex print:flex-wrap gap-y-1 print:text-[12px]">
+        <div
+            class="hidden gap-x-2 text-sm opacity-80 print:flex print:flex-wrap gap-y-1 print:text-[12px]"
+        >
             <a class="underline hover:opacity-70" href={personalWebsiteUrl}>
                 {personalWebsiteUrl}
             </a>
             <span aria-hidden="true">|</span>
-            <a class="underline hover:opacity-70" href={`mailto:${contact.email}`}>
+            <a
+                class="underline hover:opacity-70"
+                href={`mailto:${contact.email}`}
+            >
                 {contact.email}
             </a>
             <span aria-hidden="true">|</span>
@@ -71,8 +114,18 @@ const {name, about, personalWebsiteUrl, contact, location, locationLink} = CV_DA
             </a>
         </div>
     </div>
-    <span class="relative flex shrink-0 overflow-hidden rounded-xl w-32 h-32 sm:size-40 self-center sm:self-auto"
-          aria-hidden="true">
-        <Image class="h-full w-full object-cover" alt={`${name}'s profile`} src={avatarImage} loading="eager"/>
+    <span
+        class="relative flex shrink-0 overflow-hidden rounded-xl w-32 h-32 sm:size-40 self-center sm:self-auto bg-gray-200 [&:has(img)]:bg-transparent"
+        style="background-color: transparent;"
+        aria-hidden="true"
+    >
+        <Image
+            src="/me.jpeg"
+            alt={`${name}'s profile`}
+            class="h-full w-full object-contain"
+            width={160}
+            height={160}
+            priority
+        />
     </span>
 </header>

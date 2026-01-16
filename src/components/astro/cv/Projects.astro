@@ -1,20 +1,28 @@
 ---
-import { getCVData } from "../../../data/cv";
+import { getCollection } from 'astro:content';
 import { getTranslation } from "../../../lib/i18n";
 import ProjectItem from "./ProjectItem.astro";
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {projects} = CV_DATA;
+const projects = await getCollection('cv', ({ data }) => 
+    data.type === 'projects' && data.locale === currentLocale
+);
+const sortedProjects = projects.sort((a, b) => {
+    const aData = a.data;
+    const bData = b.data;
+    if (aData.type !== 'projects' || bData.type !== 'projects') return 0;
+    return (aData.order || 0) - (bData.order || 0);
+});
 const t = (key: string) => getTranslation(currentLocale, key);
 ---
-{projects && projects.length > 0 && (
+{sortedProjects && sortedProjects.length > 0 && (
     <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
         <h2 class="text-xl font-bold text-primary" id="projects-section">{t("cv.myProjects")}</h2>
         <div class="space-y-4 print:space-y-2" role="feed" aria-labelledby="projects-section">
-            {projects.map((project) => (
-                <ProjectItem {...project}/>
-            ))}
+            {sortedProjects.map((project) => {
+                if (project.data.type !== 'projects') return null;
+                return <ProjectItem {...project.data}/>;
+            })}
         </div>
     </section>
 )}

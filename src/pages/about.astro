@@ -9,6 +9,7 @@ import WorkExperience from "../components/astro/cv/WorkExperience.astro";
 import Education from "../components/astro/cv/Education.astro";
 import Certifications from "../components/astro/cv/Certifications.astro";
 import Skills from "../components/astro/cv/Skills.astro";
+import FloatingBlogMenu from "../components/astro/FloatingBlogMenu.astro";
 import "../styles/about.css";
 
 const currentLocale = Astro.currentLocale || "en";
@@ -49,6 +50,7 @@ const cvT = getTranslationObject(currentLocale, "cv") || {};
             </div>
         </section>
     </main>
+    <FloatingBlogMenu showBackToTop={true} showCategoryLink={false} showAllCategories={false} />
 </BaseLayout>
 
 <script>

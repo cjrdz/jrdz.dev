@@ -1,0 +1,31 @@
+---
+type: "work"
+locale: "es"
+company: "Banco Agricola El Salvador"
+link: "https://www.bancoagricola.com"
+title: "Ingeniero DevOps"
+start: "Noviembre 2025"
+end: "Presente"
+description: "Desarrollando y manteniendo pipelines backend para despliegues de alto rendimiento, escalables y seguros."
+achievements:
+  - "Ingeniería de pipelines escalables para despliegues de Java Spring Boot."
+  - "Implementación de prácticas de seguridad DevOps y cumplimiento con estándares de la industria."
+  - "Gestión de infraestructura como código usando Terraform y CloudFormation."
+  - "Construcción de scripts en Python para tareas de automatización y monitoreo de seguridad."
+  - "Monitoreo de salud y rendimiento de infraestructura usando Grafana y OpenSearch."
+badges:
+  - "AWS"
+  - "Java"
+  - "Kafka"
+  - "Pipelines"
+  - "PostgreSQL"
+  - "Liquibase"
+  - "Azure DevOps"
+  - "Python"
+  - "Testcontainers"
+  - "Lens"
+  - "Docker"
+  - "Kubernetes"
+  - "Grafana"
+order: 0
+---

@@ -1,16 +1,26 @@
 ---
-import { getCVData } from "../../../data/cv";
+import { getCollection } from 'astro:content';
+import { getTranslation } from "../../../lib/i18n";
 import CertificationItem from "./CertificationItem.astro";
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {certifications} = CV_DATA;
+const certifications = await getCollection('cv', ({ data }) => 
+    data.type === 'certifications' && data.locale === currentLocale
+);
+const sortedCertifications = certifications.sort((a, b) => {
+    const aData = a.data;
+    const bData = b.data;
+    if (aData.type !== 'certifications' || bData.type !== 'certifications') return 0;
+    return (aData.order || 0) - (bData.order || 0);
+});
+const t = (key: string) => getTranslation(currentLocale, key);
 ---
 <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
-    <h2 class="text-xl font-bold text-primary" id="certifications-section">Certifications</h2>
+    <h2 class="text-xl font-bold text-primary" id="certifications-section">{t("cv.certifications")}</h2>
     <div class="space-y-4 print:space-y-2" role="feed" aria-labelledby="certifications-section">
-        {certifications.map((certification) => (
-            <CertificationItem {...certification}/>
-        ))}
+        {sortedCertifications.map((certification) => {
+            if (certification.data.type !== 'certifications') return null;
+            return <CertificationItem {...certification.data}/>;
+        })}
     </div>
 </section>

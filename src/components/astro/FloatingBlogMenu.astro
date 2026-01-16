@@ -4,9 +4,17 @@ interface Props {
         id: string;
         name: string;
     };
+    showBackToTop?: boolean;
+    showCategoryLink?: boolean;
+    showAllCategories?: boolean;
 }
 
-const { categoryData } = Astro.props;
+const { 
+    categoryData,
+    showBackToTop = true,
+    showCategoryLink = true,
+    showAllCategories = true,
+} = Astro.props;
 ---
 
 <div
@@ -16,7 +24,8 @@ const { categoryData } = Astro.props;
     <!-- Main Trigger Button -->
     <button
         id="speed-dial-trigger"
-        class="btn btn-primary btn-circle btn-lg shadow-xl hover:scale-105 transition-transform duration-200"
+        class="shadow-2xl hover:scale-105 transition-all duration-200 bg-white/10 dark:bg-black/20 backdrop-blur-lg border border-white/20 dark:border-white/10 hover:bg-white/20 dark:hover:bg-black/30 flex items-center justify-center"
+        style="width: 3.5rem; height: 3.5rem; border-radius: 50%; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);"
         aria-label="Navigation Menu"
     >
         <!-- Menu Icon (Hamburger) -->
@@ -26,7 +35,7 @@ const { categoryData } = Astro.props;
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 transition-transform duration-300 group-[.open]:rotate-45 group-[.open]:hidden icon-menu"
+            class="w-6 h-6 transition-transform duration-300 group-[.open]:rotate-45 group-[.open]:hidden icon-menu text-base-content"
         >
             <path
                 stroke-linecap="round"
@@ -40,7 +49,7 @@ const { categoryData } = Astro.props;
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 transition-transform duration-300 hidden group-[.open]:block icon-close"
+            class="w-6 h-6 transition-transform duration-300 hidden group-[.open]:block icon-close text-base-content"
         >
             <path
                 stroke-linecap="round"
@@ -56,7 +65,7 @@ const { categoryData } = Astro.props;
     >
         <!-- View More in Category -->
         {
-            categoryData && (
+            categoryData && showCategoryLink && (
                 <a
                     href={`/blog/${categoryData.id}`}
                     class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
@@ -81,46 +90,54 @@ const { categoryData } = Astro.props;
         }
 
         <!-- Back to All Categories -->
-        <a
-            href="/blog"
-            class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
-        >
-            All Categories
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-4"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
-            </svg>
-        </a>
+        {
+            showAllCategories && (
+                <a
+                    href="/blog"
+                    class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
+                >
+                    All Categories
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+                    </svg>
+                </a>
+            )
+        }
 
         <!-- Scroll to Top -->
-        <button
-            id="scroll-to-top"
-            class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
-        >
-            Top
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-4"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"></path>
-            </svg>
-        </button>
+        {
+            showBackToTop && (
+                <button
+                    id="scroll-to-top"
+                    class="btn btn-neutral shadow-lg flex items-center gap-2 whitespace-nowrap"
+                >
+                    Top
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"></path>
+                    </svg>
+                </button>
+            )
+        }
     </div>
 </div>
 

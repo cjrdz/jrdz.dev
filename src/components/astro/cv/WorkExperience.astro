@@ -1,16 +1,26 @@
 ---
-import { getCVData } from '../../../data/cv';
+import { getCollection } from 'astro:content';
+import { getTranslation } from "../../../lib/i18n";
 import WorkItem from "./WorkItem.astro";
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {work} = CV_DATA;
+const work = await getCollection('cv', ({ data }) => 
+    data.type === 'work' && data.locale === currentLocale
+);
+const sortedWork = work.sort((a, b) => {
+    const aData = a.data;
+    const bData = b.data;
+    if (aData.type !== 'work' || bData.type !== 'work') return 0;
+    return (aData.order || 0) - (bData.order || 0);
+});
+const t = (key: string) => getTranslation(currentLocale, key);
 ---
 <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
-    <h2 class="text-xl font-bold text-primary" id="work-experience">Work Experience</h2>
+    <h2 class="text-xl font-bold text-primary" id="work-experience">{t("cv.workExperience")}</h2>
     <div class="space-y-4 print:space-y-2">
-        {work.map((item) => (
-            <WorkItem {...item}/>
-        ))}
+        {sortedWork.map((item) => {
+            if (item.data.type !== 'work') return null;
+            return <WorkItem {...item.data}/>;
+        })}
     </div>
 </section>

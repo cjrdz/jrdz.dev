@@ -1,0 +1,31 @@
+---
+type: "work"
+locale: "en"
+company: "Banco Agricola El Salvador"
+link: "https://www.bancoagricola.com"
+title: "DevOps Engineer"
+start: "November 2025"
+end: "Present"
+description: "Developing and maintaining backend pipelines for a high-performance, scalable and secure deployments."
+achievements:
+  - "Engineer scalable pipelines for Java Spring Boot deployments."
+  - "Implement security DevOps practices and compliance with industry standards."
+  - "Manage infrastructure as code using Terraform and CloudFormation."
+  - "Build python scripts for automation tasks and security monitoring."
+  - "Monitor infrastructure health and performance using Grafana and OpenSearch."
+badges:
+  - "AWS"
+  - "Java"
+  - "Kafka"
+  - "Pipelines"
+  - "PostgreSQL"
+  - "Liquibase"
+  - "Azure DevOps"
+  - "Python"
+  - "Testcontainers"
+  - "Lens"
+  - "Docker"
+  - "Kubernetes"
+  - "Grafana"
+order: 0
+---

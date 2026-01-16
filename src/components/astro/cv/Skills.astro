@@ -1,13 +1,21 @@
 ---
-import { getCVData } from "../../../data/cv";
+import { getCollection } from 'astro:content';
+import { getTranslation } from "../../../lib/i18n";
 import Badge from './common/Badge.astro';
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {skills} = CV_DATA;
+const skillsEntries = await getCollection('cv', ({ data }) => 
+    data.type === 'skills' && data.locale === currentLocale
+);
+const skillsEntry = skillsEntries[0];
+if (!skillsEntry || skillsEntry.data.type !== 'skills') {
+    throw new Error(`Skills data not found for locale: ${currentLocale}`);
+}
+const skills = skillsEntry.data.skills;
+const t = (key: string) => getTranslation(currentLocale, key);
 ---
 <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
-    <h2 class="text-xl font-bold text-primary" id="skills-section">Skills</h2>
+    <h2 class="text-xl font-bold text-primary" id="skills-section">{t("cv.skills")}</h2>
     <ul class="flex list-none flex-wrap gap-1 p-0" aria-label="List of skills">
         {skills.map((skill) => (
             <li>

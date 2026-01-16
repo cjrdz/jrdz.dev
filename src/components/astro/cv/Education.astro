@@ -1,16 +1,26 @@
 ---
-import { getCVData } from "../../../data/cv";
+import { getCollection } from 'astro:content';
+import { getTranslation } from "../../../lib/i18n";
 import EducationItem from "./EducationItem.astro";
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {education} = CV_DATA;
+const education = await getCollection('cv', ({ data }) => 
+    data.type === 'education' && data.locale === currentLocale
+);
+const sortedEducation = education.sort((a, b) => {
+    const aData = a.data;
+    const bData = b.data;
+    if (aData.type !== 'education' || bData.type !== 'education') return 0;
+    return (aData.order || 0) - (bData.order || 0);
+});
+const t = (key: string) => getTranslation(currentLocale, key);
 ---
 <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
-    <h2 class="text-xl font-bold text-primary" id="education-section">Education</h2>
+    <h2 class="text-xl font-bold text-primary" id="education-section">{t("cv.education")}</h2>
     <div class="space-y-4 print:space-y-2" role="feed" aria-labelledby="education-section">
-        {education.map((entry) => (
-            <EducationItem {...entry}/>
-        ))}
+        {sortedEducation.map((entry) => {
+            if (entry.data.type !== 'education') return null;
+            return <EducationItem {...entry.data}/>;
+        })}
     </div>
 </section>

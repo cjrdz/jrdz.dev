@@ -1,12 +1,22 @@
 ---
-import { getCVData } from '../../../data/cv';
+import { getCollection } from 'astro:content';
+import { getTranslation } from "../../../lib/i18n";
 
 const currentLocale = Astro.currentLocale || "en";
-const CV_DATA = getCVData(currentLocale);
-const {summary} = CV_DATA;
+const personalEntries = await getCollection('cv', ({ data }) => 
+    data.type === 'personal' && data.locale === currentLocale
+);
+const personal = personalEntries[0];
+if (!personal || personal.data.type !== 'personal') {
+    throw new Error(`Personal data not found for locale: ${currentLocale}`);
+}
+
+// Summary is in the body content of personal markdown
+const summary = personal.body;
+const t = (key: string) => getTranslation(currentLocale, key);
 ---
 <section class="flex min-h-0 flex-col gap-y-3 print:gap-y-1 mb-8 print:mb-4">
-    <h2 class="text-xl font-bold text-primary" id="about-section">About</h2>
+    <h2 class="text-xl font-bold text-primary" id="about-section">{t("cv.about")}</h2>
     <div class="text-pretty text-sm opacity-80 print:text-[12px]"
          aria-labelledby="about-section">
         {summary}

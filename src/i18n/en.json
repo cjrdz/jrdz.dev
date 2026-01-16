@@ -43,11 +43,15 @@
     "pageTitle": "About - Jrdz",
     "pageDescription": "Learn more about Jonathan Rodriguez, a passionate developer and cloud engineer",
     "myProjects": "Projects",
+    "workExperience": "Work Experience",
+    "education": "Education",
+    "certifications": "Certifications",
+    "skills": "Skills",
+    "about": "About",
     "name": "Jonathan Rodriguez",
     "title": "Software Engineer",
     "location": "La Libertad, El Salvador",
     "locationLink": "https://maps.app.goo.gl/BUR3nRxeE9BoF56W9",
-    "about": "Goal-oriented person who loves to learn and grow personally and professionally.",
     "summary": "A Software Engineer specializing in developing high-performance, scalable projects using DevOps tools. I have extensive experience building web applications and DevOps pipelines.",
     "personalWebsiteUrl": "https://jrdz.dev/about/",
     "contact": {
@@ -179,67 +183,6 @@
         "link": "https://ishos-factory.vercel.app",
         "technologies": ["Astro", "TypeScript", "Vercel"]
       }
-    ],
-    "education": [
-      {
-        "school": "ITCA FEPADE Santa Tecla",
-        "degree": "Software Engineering",
-        "start": "2022",
-        "end": "2024"
-      },
-      {
-        "school": "EIJ Fundación San Andres",
-        "degree": "English Scholarship",
-        "start": "2016",
-        "end": "2018"
-      },
-      {
-        "school": "Jose Damian Villacorta",
-        "degree": "High School Diploma",
-        "start": "2016",
-        "end": "2017"
-      }
-    ],
-    "certifications": [
-      {
-        "name": "Cloud and DevOps Fundamentals",
-        "issuer": "Platzi",
-        "link": "https://platzi.com/p/jonathanrdzdev/ruta/30095-fundamentos-de-cloud-y-devops/diploma/detalle/",
-        "date": "2025",
-        "credentialId": "f0cbbdc9-0ea2-4b45-9ac4-9ac01b28dde8-0dcbaa3e-e760-4434-8d04-f66ad34784cb"
-      },
-      {
-        "name": "Microsoft Certified: Azure Fundamentals (AZ-900)",
-        "issuer": "Microsoft",
-        "link": "https://learn.microsoft.com/en-us/users/jrdz/credentials/63eb8b4305fa1a14?ref=https%3A%2F%2Fwww.linkedin.com%2F",
-        "date": "2025",
-        "credentialId": "63EB8B4305FA1A14"
-      },
-      {
-        "name": "Azure Developer - ARM - Specialist (L200)",
-        "issuer": "QA Ltd",
-        "date": "2024",
-        "credentialId": "22246888"
-      }
-    ],
-    "skills": [
-      "Python",
-      "AWS",
-      "Azure",
-      "DevOps",
-      "Astro JS",
-      "Svelte JS",
-      "TypeScript",
-      "SQL",
-      "PostreSQL",
-      "Docker",
-      "Kubernetes",
-      "Podman",
-      "Linux",
-      "Ansible",
-      "Shell Scripting",
-      "Bash Scripting",
-      "Git"
     ]
   }
 }

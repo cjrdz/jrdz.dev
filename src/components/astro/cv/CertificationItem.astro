@@ -1,7 +1,10 @@
 ---
-import type {Certification} from "../../../data/cv";
-
-interface Props extends Certification {
+interface Props {
+    name: string;
+    issuer: string;
+    link?: string;
+    date: string;
+    credentialId?: string;
 }
 
 const {name, issuer, link, date, credentialId} = Astro.props;

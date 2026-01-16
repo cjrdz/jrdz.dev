@@ -1,7 +1,9 @@
 ---
-import type {Education} from "../../../data/cv";
-
-interface Props extends Education {
+interface Props {
+    school: string;
+    degree: string;
+    start: string;
+    end: string | null;
 }
 
 const {school, degree, start, end} = Astro.props;
